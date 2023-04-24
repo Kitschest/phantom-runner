@@ -91,9 +91,12 @@ let ctxF = canvasF.getContext("2d");
 let background = document.createElement("img");
 background.src = "images/bg1.png"
 
-ctxB.onload = () => {
+background.onload = () => {
     ctxB.drawImage(background,0,0,800,600)
 }
+
+let gradient = document.createElement("img");
+gradient.src = "images/g2.png"
 
 // ctxB.fillStyle = "yellow";
 // ctxB.fillRect(0,0,800,600);
@@ -116,12 +119,16 @@ const player = {
     y: 200,
     arcX: 210,
     arcY: 210,
+    gradX: 155,
+    gradY: 155,
 
     recalculatePosition: function(incX, incY) {
         this.x += incX;
         this.arcX += incX;
+        this.gradX += incX;
         this.y += incY;
         this.arcY += incY;
+        this.gradY += incY;
     },
 
     print: function() {
@@ -158,6 +165,7 @@ const update = function() {
     ctxF.stroke();
     ctxF.clip();
     ctxF.clearRect(0,0,800,600);
+    ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
 
 }
 
