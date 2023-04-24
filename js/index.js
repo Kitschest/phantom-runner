@@ -96,7 +96,7 @@ background.onload = () => {
 }
 
 let gradient = document.createElement("img");
-gradient.src = "images/g2.png"
+gradient.src = "images/p1.png"
 
 // ctxB.fillStyle = "yellow";
 // ctxB.fillRect(0,0,800,600);
@@ -114,21 +114,28 @@ ctxF.save();
 // ctxB.fillStyle = "red";
 // ctxB.fillRect(200,200,20,20)
 
+let intervalCount = 0
+
 const player = {
     x: 200,
     y: 200,
     arcX: 210,
     arcY: 210,
-    gradX: 155,
-    gradY: 155,
+    gradX: 90,
+    gradY: 90,
+    gradWH: 240,
 
     recalculatePosition: function(incX, incY) {
         this.x += incX;
         this.arcX += incX;
-        this.gradX += incX;
+        this.gradX = this.gradX + incX + (3 * intervalCount) / 1000;
+        
         this.y += incY;
         this.arcY += incY;
-        this.gradY += incY;
+        this.gradY = this.gradY + incY + (3 * intervalCount) / 1000;
+
+        this.gradWH = this.gradWH - (6 * intervalCount) / 1000;
+
     },
 
     print: function() {
@@ -140,6 +147,11 @@ const player = {
 
 
 const update = function() {
+    intervalCount++;
+
+    if (intervalCount == 100) {
+        intervalCount = 100;
+    }
     //limpiar
     ctxF.restore()
     ctxB.clearRect(0,0,800,600);
@@ -165,11 +177,12 @@ const update = function() {
     ctxF.stroke();
     ctxF.clip();
     ctxF.clearRect(0,0,800,600);
-    ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
-
+    ctxF.drawImage(gradient,player.gradX,player.gradY,player.gradWH,player.gradWH)
+    
 }
 
 let intervalId = setInterval(update,60);
+
 
 document.body.addEventListener("keydown", (e)=>{
     if(e.key == "ArrowUp" || "") {
