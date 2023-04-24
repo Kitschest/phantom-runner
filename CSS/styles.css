@@ -1,0 +1,9 @@
+#canvasBack {
+    position: absolute;
+    z-index: 1;
+}
+
+#canvasFront {
+    position: absolute;
+    z-index: 2;
+}
