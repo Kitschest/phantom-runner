@@ -104,28 +104,28 @@ let ctxF = canvasF.getContext("2d");
 
 
 //Player animation images
-let playerStanding = document.createElement("img");
-playerStanding.src = "images/player/standingDown.png";
+let playerSprite = document.createElement("img");
+playerSprite.src = "images/BILLY_BIT.png";
 
-let playerUp1 = document.createElement("img");
-playerUp1.src = "images/player/up1.png";
-let playerUp2 = document.createElement("img");
-playerUp2.src = "images/player/up2.png";
+// let playerUp1 = document.createElement("img");
+// playerUp1.src = "images/player/up1.png";
+// let playerUp2 = document.createElement("img");
+// playerUp2.src = "images/player/up2.png";
 
-let playerRight1 = document.createElement("img");
-playerRight1.src = "images/player/right1.png";
-let playerRight2 = document.createElement("img");
-playerRight2.src = "images/player/right2.png";
+// let playerRight1 = document.createElement("img");
+// playerRight1.src = "images/player/right1.png";
+// let playerRight2 = document.createElement("img");
+// playerRight2.src = "images/player/right2.png";
 
-let playerDown1 = document.createElement("img");
-playerDown1.src = "images/player/down1.png";
-let playerDown2 = document.createElement("img");
-playerDown2.src = "images/player/down2.png";
+// let playerDown1 = document.createElement("img");
+// playerDown1.src = "images/player/down1.png";
+// let playerDown2 = document.createElement("img");
+// playerDown2.src = "images/player/down2.png";
 
-let playerLeft1 = document.createElement("img");
-playerLeft1.src = "images/player/left1.png";
-let playerLeft2 = document.createElement("img");
-playerLeft2.src = "images/player/left2.png";
+// let playerLeft1 = document.createElement("img");
+// playerLeft1.src = "images/player/left1.png";
+// let playerLeft2 = document.createElement("img");
+// playerLeft2.src = "images/player/left2.png";
 
 
 
@@ -147,7 +147,7 @@ ctxF.fillRect(0,0,800,600);
 ctxF.save();
 
 
-let direction = "standing";
+let direction = "standingDown";
 
 const player = {
     
@@ -157,6 +157,25 @@ const player = {
     arcY: 310,
     gradX: 355,
     gradY: 255,
+
+    spritePositions: {
+        standingUp: {x_ini: 0, y_ini: 48},
+        up: [
+            {x_ini: 16, y_ini: 48},{x_ini: 32, y_ini: 48}
+        ],
+        standingRight: {x_ini: 0, y_ini: 32},
+        right: [
+            {x_ini: 47, y_ini: 32},{x_ini: 63, y_ini: 32}
+        ],
+        standingDown: {x_ini: 0, y_ini: 0},
+        down: [
+            {x_ini: 16, y_ini: 0},{x_ini: 32, y_ini: 0}
+        ],
+        standingLeft: {x_ini: 0, y_ini: 16},
+        left: [
+            {x_ini: 32, y_ini: 16},{x_ini: 47, y_ini: 16}
+        ],
+    },
 
     recalculatePosition: function(incX, incY) {
         this.x += incX;
@@ -168,26 +187,34 @@ const player = {
     },
 
     print: function() {
-        if (direction == "standing") {
-            ctxB.fillStyle = "red";
-            ctxB.fillRect(this.x,this.y,20,20)
+        if (direction == "standingUp") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingUp.x_ini, this.spritePositions.standingUp.y_ini, 12,16,this.x,this.y,18,23)
+        }
+        if (direction == "standingRight") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingRight.x_ini, this.spritePositions.standingRight.y_ini, 12,16,this.x,this.y,18,23)
+        }
+        if (direction == "standingDown") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingDown.x_ini, this.spritePositions.standingDown.y_ini, 12,16,this.x,this.y,18,23)
+        }
+        if (direction == "standingLeft") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingLeft.x_ini, this.spritePositions.standingLeft.y_ini, 12,16,this.x,this.y,18,23)
         }
         if (direction == "up") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerUp1, this.x,this.y,16,20)}
-            else {ctxB.drawImage(playerUp2, this.x,this.y,16, 20)}
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.up[0].x_ini, this.spritePositions.up[0].y_ini, 12,16,this.x,this.y,18,23)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.up[1].x_ini, this.spritePositions.up[1].y_ini,12,16, this.x,this.y,18,23)}
         }
         if (direction == "right") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerRight1, this.x,this.y,16,20)}
-            else {ctxB.drawImage(playerRight2, this.x,this.y,16, 20)}
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.right[0].x_ini, this.spritePositions.right[0].y_ini, 12,16,this.x,this.y,18,23)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.right[1].x_ini, this.spritePositions.right[1].y_ini,12,16, this.x,this.y,18,23)}
         }
         if (direction == "down") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerDown1, this.x,this.y,16,20)}
-            else {ctxB.drawImage(playerDown2, this.x,this.y,16, 20)}
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.down[0].x_ini, this.spritePositions.down[0].y_ini, 12,16,this.x,this.y,18,23)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.down[1].x_ini, this.spritePositions.down[1].y_ini,12,16, this.x,this.y,18,23)}
         }
         if (direction == "left") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerLeft1, this.x,this.y,16,20)}
-            else {ctxB.drawImage(playerLeft2, this.x,this.y,16, 20)}
-        }        
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.left[0].x_ini, this.spritePositions.left[0].y_ini, 12,16,this.x,this.y,18,23)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.left[1].x_ini, this.spritePositions.left[1].y_ini,12,16, this.x,this.y,18,23)}
+        }
     }
 }
 
@@ -234,33 +261,69 @@ const update = function() {
 
 let intervalId = setInterval(update,60);
 
+
+
+
+
+
+
+let timeoutIdUp
+let timeoutIdRight
+let timeoutIdDown
+let timeoutIdLeft
 let iWalk = 0
+
+
 document.body.addEventListener("keydown", (e)=>{
     if(e.key == "ArrowUp" || e.key == "w") {
         player.recalculatePosition(0,-20);
         direction = "up";
         iWalk++;
+        clearTimeout(timeoutIdUp),
+        clearTimeout(timeoutIdRight)
+        clearTimeout(timeoutIdDown)
+        clearTimeout(timeoutIdLeft)
     }
     if(e.key == "ArrowDown" || e.key == "s") {
         player.recalculatePosition(0,20);
         direction = "down";
         iWalk++;
+        clearTimeout(timeoutIdUp),
+        clearTimeout(timeoutIdRight)
+        clearTimeout(timeoutIdDown)
+        clearTimeout(timeoutIdLeft)
     }
     if(e.key == "ArrowLeft" || e.key == "a") {
         player.recalculatePosition(-20, 0);
         direction = "left";
         iWalk++;
+        clearTimeout(timeoutIdUp),
+        clearTimeout(timeoutIdRight)
+        clearTimeout(timeoutIdDown)
+        clearTimeout(timeoutIdLeft)
     }
     if(e.key == "ArrowRight" || e.key == "d") {
         player.recalculatePosition(20, 0);
         direction = "right";
         iWalk++;
+        clearTimeout(timeoutIdUp),
+        clearTimeout(timeoutIdRight)
+        clearTimeout(timeoutIdDown)
+        clearTimeout(timeoutIdLeft)
     }
 })
 
-
-/* document.body.addEventListener("keyup", (e)=>{
-    if(e.key == "ArrowUp" || e.key == "w" || e.key == "ArrowDown" || e.key == "s" || e.key == "ArrowLeft" || e.key == "a" || e.key == "ArrowRight" || e.key == "d") {
-        direction = "standing";
+document.body.addEventListener("keyup", (e)=>{
+    if(e.key == "ArrowUp" || e.key == "w") {
+        timeoutIdUp = setTimeout(() => {direction = "standingUp"}, 400)
     }
-}) */
+    if(e.key == "ArrowRight" || e.key == "d") {
+        timeoutIdRight = setTimeout(() => {direction = "standingRight"}, 400)
+    }
+    if(e.key == "ArrowDown" || e.key == "s") {
+        timeoutIdDown = setTimeout(() => {direction = "standingDown"}, 400)
+    }
+    if(e.key == "ArrowLeft" || e.key == "a") {
+        timeoutIdLeft = setTimeout(() => {direction = "standingLeft"}, 400)
+    }
+})
