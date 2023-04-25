@@ -1,4 +1,18 @@
 //Coordenadas
+
+/* tiles = [
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
+    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, ] */
+
+
+
+
 const x1 = 0;
 const x2 = 20;
 const x3 = 40
@@ -88,8 +102,36 @@ let ctxB = canvasB.getContext("2d");
 let canvasF = document.getElementById("canvasFront");
 let ctxF = canvasF.getContext("2d");
 
+
+//Player animation images
+let playerStanding = document.createElement("img");
+playerStanding.src = "images/player/standingDown.png";
+
+let playerUp1 = document.createElement("img");
+playerUp1.src = "images/player/up1.png";
+let playerUp2 = document.createElement("img");
+playerUp2.src = "images/player/up2.png";
+
+let playerRight1 = document.createElement("img");
+playerRight1.src = "images/player/right1.png";
+let playerRight2 = document.createElement("img");
+playerRight2.src = "images/player/right2.png";
+
+let playerDown1 = document.createElement("img");
+playerDown1.src = "images/player/down1.png";
+let playerDown2 = document.createElement("img");
+playerDown2.src = "images/player/down2.png";
+
+let playerLeft1 = document.createElement("img");
+playerLeft1.src = "images/player/left1.png";
+let playerLeft2 = document.createElement("img");
+playerLeft2.src = "images/player/left2.png";
+
+
+
+
 let background = document.createElement("img");
-background.src = "images/bg1.png"
+background.src = "images/PhantomRunner1.0.png"
 
 background.onload = () => {
     ctxB.drawImage(background,0,0,800,600)
@@ -98,29 +140,23 @@ background.onload = () => {
 let gradient = document.createElement("img");
 gradient.src = "images/g2.png"
 
-// ctxB.fillStyle = "yellow";
-// ctxB.fillRect(0,0,800,600);
 
 ctxF.fillStyle = "black";
 ctxF.fillRect(0,0,800,600);
 
 ctxF.save();
 
-// ctxF.arc(200,200,50,0,2*Math.PI);
-// ctxF.stroke();
-// ctxF.clip();
-// ctxF.clearRect(0,0,800,600);
 
-// ctxB.fillStyle = "red";
-// ctxB.fillRect(200,200,20,20)
+let direction = "standing";
 
 const player = {
-    x: 200,
-    y: 200,
-    arcX: 210,
-    arcY: 210,
-    gradX: 155,
-    gradY: 155,
+    
+    x: 400,
+    y: 300,
+    arcX: 410,
+    arcY: 310,
+    gradX: 355,
+    gradY: 255,
 
     recalculatePosition: function(incX, incY) {
         this.x += incX;
@@ -132,11 +168,33 @@ const player = {
     },
 
     print: function() {
-        ctxB.fillStyle = "red";
-        ctxB.fillRect(this.x,this.y,20,20)
+        if (direction == "standing") {
+            ctxB.fillStyle = "red";
+            ctxB.fillRect(this.x,this.y,20,20)
+        }
+        if (direction == "up") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerUp1, this.x,this.y,16,20)}
+            else {ctxB.drawImage(playerUp2, this.x,this.y,16, 20)}
+        }
+        if (direction == "right") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerRight1, this.x,this.y,16,20)}
+            else {ctxB.drawImage(playerRight2, this.x,this.y,16, 20)}
+        }
+        if (direction == "down") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerDown1, this.x,this.y,16,20)}
+            else {ctxB.drawImage(playerDown2, this.x,this.y,16, 20)}
+        }
+        if (direction == "left") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerLeft1, this.x,this.y,16,20)}
+            else {ctxB.drawImage(playerLeft2, this.x,this.y,16, 20)}
+        }        
     }
 }
 
+
+/* class Obstacle {
+    constructor (x,y)
+} */
 
 
 const update = function() {
@@ -151,7 +209,12 @@ const update = function() {
     //redibujar
     // ctxB.fillStyle = "yellow";
     // ctxB.fillRect(0,0,800,600);
-    ctxB.drawImage(background,0,0,800,600)
+    ctxB.drawImage(background,0,0,800,600);
+
+    ctxB.fillStyle = "green";
+    ctxB.fillRect(x16,y16,20,20);
+    ctxB.fillRect(x17,y16,20,20);
+
 
     player.print();
 
@@ -171,17 +234,33 @@ const update = function() {
 
 let intervalId = setInterval(update,60);
 
+let iWalk = 0
 document.body.addEventListener("keydown", (e)=>{
-    if(e.key == "ArrowUp" || "") {
+    if(e.key == "ArrowUp" || e.key == "w") {
         player.recalculatePosition(0,-20);
+        direction = "up";
+        iWalk++;
     }
-    if(e.key == "ArrowDown") {
+    if(e.key == "ArrowDown" || e.key == "s") {
         player.recalculatePosition(0,20);
+        direction = "down";
+        iWalk++;
     }
-    if(e.key == "ArrowLeft") {
+    if(e.key == "ArrowLeft" || e.key == "a") {
         player.recalculatePosition(-20, 0);
+        direction = "left";
+        iWalk++;
     }
-    if(e.key == "ArrowRight") {
+    if(e.key == "ArrowRight" || e.key == "d") {
         player.recalculatePosition(20, 0);
+        direction = "right";
+        iWalk++;
     }
 })
+
+
+/* document.body.addEventListener("keyup", (e)=>{
+    if(e.key == "ArrowUp" || e.key == "w" || e.key == "ArrowDown" || e.key == "s" || e.key == "ArrowLeft" || e.key == "a" || e.key == "ArrowRight" || e.key == "d") {
+        direction = "standing";
+    }
+}) */
