@@ -131,14 +131,14 @@ playerSprite.src = "images/BILLY_BIT.png";
 
 
 let background = document.createElement("img");
-background.src = "images/PhantomRunner1.0.png"
+background.src = "images/PhantomRunner1.2.png"
 
 background.onload = () => {
     ctxB.drawImage(background,0,0,800,600)
 }
 
 let gradient = document.createElement("img");
-gradient.src = "images/g2.png"
+gradient.src = "images/LAYER2.png"
 
 
 ctxF.fillStyle = "black";
@@ -155,8 +155,8 @@ const player = {
     y: 300,
     arcX: 410,
     arcY: 310,
-    gradX: 355,
-    gradY: 255,
+    gradX: -393  ,  //355,
+    gradY: -290 ,  //255,
 
     spritePositions: {
         standingUp: {x_ini: 0, y_ini: 48},
@@ -245,7 +245,7 @@ const update = function() {
 
     player.print();
 
-    ctxF.fillStyle = "black";
+/*     ctxF.fillStyle = "rgba(0, 0, 0, 0.7)";
     ctxF.fillRect(0,0,800,600);
 
     ctxF.save()
@@ -254,9 +254,10 @@ const update = function() {
     ctxF.arc(player.arcX,player.arcY,50,0,2*Math.PI);
     ctxF.stroke();
     ctxF.clip();
-    ctxF.clearRect(0,0,800,600);
-    ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
+    ctxF.clearRect(0,0,800,600); */
+    ctxF.drawImage(gradient,player.gradX,player.gradY,1600,1200)
 
+    //ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
 }
 
 let intervalId = setInterval(update,60);
