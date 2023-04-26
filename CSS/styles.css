@@ -14,3 +14,10 @@
   background: 
   url('images/BILLY_BIT.png') 0px 0px;
   }
+
+  .ghost {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    z-index: 3; /* Put the ghosts on a higher z-index than both canvases */
+}
