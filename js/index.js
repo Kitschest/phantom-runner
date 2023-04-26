@@ -110,6 +110,7 @@ const player = {
     }
 }
 
+
 const update = function() {
     // Clear
     ctxF.restore();
@@ -123,13 +124,13 @@ const update = function() {
     player.print();
     ghost.print(); // Add this line to draw the Ghost
 
-    ctxF.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
+    // ctxF.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
     checkGhostCollision(); // Add this line to check for collisions
 };
 
 
-    let intervalId = setInterval(update,60);
+let intervalId = setInterval(update,60);
 
 let timeoutIdUp
 let timeoutIdRight

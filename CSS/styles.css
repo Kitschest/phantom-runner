@@ -1,21 +1,36 @@
+body {
+    background-image: url('./images/browser-background.png');
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+    margin: 1;
+    padding: 1;
+}
+
 #canvasBack {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1;
 }
 
 #canvasFront {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 2;
 }
 
 #image {
     height: 15px;
     width: 15px;
-  background: 
-  url('images/BILLY_BIT.png') 0px 0px;
-  }
+    background: 
+        url('images/BILLY_BIT.png') 0px 0px;
+}
 
-  .ghost {
+.ghost {
     height: 30px;
     width: 30px;
     position: absolute;
