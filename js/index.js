@@ -73,10 +73,7 @@ const player = {
         ],
     },
 
-/* 
-    collisionCheck: function() {
 
-    } */
 
 
     recalculatePosition: function(incX, incY) {
