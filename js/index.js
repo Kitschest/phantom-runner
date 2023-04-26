@@ -1,14 +1,32 @@
   
 
-/* class Game {
-    constructor {
-        this.canvasB = document.getElementById("canvasBack");
-        this.ctxB = canvasB.getContext("2d");
-        this.canvasF = document.getElementById("canvasFront");
-        this.ctxF = canvasF.getContext("2d");
+const game = {
+    canvasB: document.getElementById("canvasBack"),
+    ctxB: canvasB.getContext("2d"),
+    // canvasF: document.getElementById("canvasFront"),
+    // ctxF: canvasF.getContext("2d"),
+
+    background: document.createElement("img"),
+    background.src = "images/bg_grid.png"
+
+    background.onload = () => {
+        ctxB.drawImage(background,0,0,800,600)
+    }
+
+    player: {
+        //IMAGES
+        playerSprite: document.createElement("img"),
+        playerSprite.src: "images/BILLY_BIT.png", //"images/player1.png"         
+
+        let gradient = document.createElement("img");
+        gradient.src = "images/LAYER2.png"
+
+
 
     }
-} */
+
+}
+
 
 let canvasB = document.getElementById("canvasBack");
 let ctxB = canvasB.getContext("2d");
@@ -42,7 +60,7 @@ let direction = "standingDown";
 
 const player = {
     
-    x: 400,
+    x: 401,
     y: 290,
     w: 20, //18
     h: 25, //23
@@ -50,7 +68,8 @@ const player = {
     // arcY: 310,
     gradX: -393  ,  //355,
     gradY: -295 ,  //255,
-    wallCollision: false,
+
+    direction: "standingDown",
 
     spritePositions: {
         standingUp: {x_ini: 0, y_ini: 48},
@@ -69,7 +88,7 @@ const player = {
         ],
         standingLeft: {x_ini: 0, y_ini: 16},
         left: [
-            {x_ini: 32, y_ini: 16},{x_ini: 47, y_ini: 16}
+            {x_ini: 47, y_ini: 16},{x_ini: 63, y_ini: 16}
         ],
     },
 
@@ -77,72 +96,76 @@ const player = {
 
 
     recalculatePosition: function(incX, incY) {
-
-        if (!this.wallCollision) {
-            this.x += incX;
-            // this.arcX += incX;
-            this.gradX += incX;
-            this.y += incY;
-            // this.arcY += incY;
-            this.gradY += incY;
-        }
-        if (this.wallCollision) {
-            this.x -= incX;
-            this.gradX -= incX;
-            this.y -= incY;
-            this.gradY -= incY;
-            this.wallCollision = false;
-        }
-
-
-        
+        let newX = this.x + incX;
+        let newY = this.y + incY;
+    
+        if (canMoveTo(newX, newY, 18, 23)) {
+            if (newX >= 0 && newX <= canvasB.width - 18) { // 18 is the player's width
+                this.x = newX;
+                // this.arcX += incX;
+                this.gradX += incX;
+            }
+    
+            if (newY >= 0 && newY <= canvasB.height - 23) { // 23 is the player's height
+                this.y = newY;
+                // this.arcY += incY;
+                this.gradY += incY;
+            }
+        }        
     },
 
     print: function() {
-        ctxB.fillStyle = "red";
-        ctxB.fillRect(this.x,this.y,this.w,this.h);
+        // ctxB.fillStyle = "red";
+        // ctxB.fillRect(this.x,this.y,this.w,this.h);
 
 
-        // if (direction == "standingUp") {
-        //     ctxB.drawImage(playerSprite,this.spritePositions.standingUp.x_ini, this.spritePositions.standingUp.y_ini, 12,16,this.x,this.y,this.w,this.h)
-        // }
-        // if (direction == "standingRight") {
-        //     ctxB.drawImage(playerSprite,this.spritePositions.standingRight.x_ini, this.spritePositions.standingRight.y_ini, /* 100, 100 */ 12,16,this.x,this.y,this.w,this.h)
-        // }
-        // if (direction == "standingDown") {
-        //     ctxB.drawImage(playerSprite,this.spritePositions.standingDown.x_ini, this.spritePositions.standingDown.y_ini, 12,16,this.x,this.y,this.w,this.h)
-        // }
-        // if (direction == "standingLeft") {
-        //     ctxB.drawImage(playerSprite,this.spritePositions.standingLeft.x_ini, this.spritePositions.standingLeft.y_ini, 12,16,this.x,this.y,this.w,this.h)
-        // }
-        // if (direction == "up") {
-        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.up[0].x_ini, this.spritePositions.up[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
-        //     else {ctxB.drawImage(playerSprite,this.spritePositions.up[1].x_ini, this.spritePositions.up[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
-        // }
-        // if (direction == "right") {
-        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.right[0].x_ini, this.spritePositions.right[0].y_ini, /* 100, 100 */ 12,16,this.x,this.y,this.w,this.h)}
-        //     else {ctxB.drawImage(playerSprite,this.spritePositions.right[1].x_ini, this.spritePositions.right[1].y_ini,/* 100, 100 */ 12,16, this.x,this.y,this.w,this.h)}
-        // }
-        // if (direction == "down") {
-        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.down[0].x_ini, this.spritePositions.down[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
-        //     else {ctxB.drawImage(playerSprite,this.spritePositions.down[1].x_ini, this.spritePositions.down[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
-        // }
-        // if (direction == "left") {
-        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.left[0].x_ini, this.spritePositions.left[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
-        //     else {ctxB.drawImage(playerSprite,this.spritePositions.left[1].x_ini, this.spritePositions.left[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
-        // }
+        // CAMBIAR TODOS LOS DIRECTION POR THIS.DIRECTION (Y TB LOS DE LOS EVENT LISTENERS)
+
+        if (direction == "standingUp") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingUp.x_ini, this.spritePositions.standingUp.y_ini, 12,16,this.x,this.y,this.w,this.h)
+        }
+        if (direction == "standingRight") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingRight.x_ini, this.spritePositions.standingRight.y_ini, /* 100, 100 */ 12,16,this.x,this.y,this.w,this.h)
+        }
+        if (direction == "standingDown") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingDown.x_ini, this.spritePositions.standingDown.y_ini, 12,16,this.x,this.y,this.w,this.h)
+        }
+        if (direction == "standingLeft") {
+            ctxB.drawImage(playerSprite,this.spritePositions.standingLeft.x_ini, this.spritePositions.standingLeft.y_ini, 12,16,this.x,this.y,this.w,this.h)
+        }
+        if (direction == "up") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.up[0].x_ini, this.spritePositions.up[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.up[1].x_ini, this.spritePositions.up[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
+        }
+        if (direction == "right") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.right[0].x_ini, this.spritePositions.right[0].y_ini, /* 100, 100 */ 12,16,this.x,this.y,this.w,this.h)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.right[1].x_ini, this.spritePositions.right[1].y_ini,/* 100, 100 */ 12,16, this.x,this.y,this.w,this.h)}
+        }
+        if (direction == "down") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.down[0].x_ini, this.spritePositions.down[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.down[1].x_ini, this.spritePositions.down[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
+        }
+        if (direction == "left") {
+            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.left[0].x_ini, this.spritePositions.left[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
+            else {ctxB.drawImage(playerSprite,this.spritePositions.left[1].x_ini, this.spritePositions.left[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
+        }
     }
 }
 
+  //COLLISION WITH OBSTACLES
 
-colissionObjects = [
+
+/* colissionObjects = [
     {x_ini: 0, y_ini: 0, x_end: 40, y_end: 2}, //top wall
     {x_ini: -1, y_ini: 0, x_end: 0, y_end: 40}, //left wall
     {x_ini: 40, y_ini: 0, x_end: 41, y_end: 30}, //right wall
     {x_ini: 0, y_ini: 30, x_end: 41, y_end: 31} //bottom wall
-]
+] */
 
 
+//OBSTACLES = ONLY THE FOUR EXTERNAL WALLS. 
+
+/* 
 class ColissionObject {
     constructor (x_ini, y_ini, x_end, y_end) {
         this.x = x_ini * 20;
@@ -158,8 +181,8 @@ class ColissionObject {
     }
 }
 
-let topWall = new ColissionObject(0,0,40,2);
-let leftWall = new ColissionObject(-1,0,0,40)
+let topWall = new ColissionObject(0,0,40,1);
+let leftWall = new ColissionObject(-1,0,0,30) //aqui antes puse (-1,0,0,40) 
 let rigthWall = new ColissionObject(40,0,41,30)
 let bottomWall = new ColissionObject(0,30,41,31)
 let obstacles = [];
@@ -168,28 +191,71 @@ obstacles.push(leftWall);
 obstacles.push(rigthWall);
 obstacles.push(bottomWall);
 
-console.log("obstacles",obstacles)
+console.log("obstacles",obstacles) */
+
+//-------------------
+
+const obstacles = [
+    // obstacle data here:
+
+    {x: 0,   y: 0,   w: 220, h: 40},  //1
+    {x: 220, y: 0,   w: 40,  h: 88},  //2
+    {x: 260, y: 0,   w: 540, h: 40},  //3
+    {x: 220, y: 120, w: 40,  h: 149}, //4
+    {x: 260, y: 160, w: 160, h: 60},  //5
+    {x: 440, y: 160, w: 160, h: 60},  //6
+    {x: 560, y: 220, w: 40,  h: 50},  //7 **
+    {x: 600, y: 180, w: 100, h: 60},  //8
+    {x: 720, y: 180, w: 80,  h: 60},  //9
+    {x: 0,   y: 380, w: 80,  h: 60},  //10
+    {x: 100, y: 380, w: 160, h: 60},  //11
+    {x: 220, y: 300, w: 40,  h: 80},  //12
+    {x: 240, y: 400, w: 80,  h: 60},  //13
+    {x: 340, y: 400, w: 160, h: 60},  //14
+    {x: 520, y: 400, w: 80,  h: 60},  //15
+    {x: 560, y: 300, w: 40,  h: 100}, //16
+    {x: 580, y: 420, w: 180, h: 60},  //17
+    {x: 780, y: 420, w: 20,  h: 60},  //18
+    {x: 400, y: 460, w: 40,  h: 48},  //19
+    {x: 400, y: 540, w: 40,  h: 60},  //20 
+  ];
 
 
 
+function isColliding(rect1, rect2) {
+    return rect1.x < rect2.x + rect2.w &&
+           rect1.x + rect1.w > rect2.x &&
+           rect1.y < rect2.y + rect2.h &&
+           rect1.y + rect1.h > rect2.y;
+}
+
+function canMoveTo(newX, newY, playerWidth, playerHeight) {
+    const playerRect = {
+      x: newX,
+      y: newY,
+      w: playerWidth,
+      h: playerHeight
+    };
+  
+    for (const obstacle of obstacles) {
+      if (isColliding(playerRect, obstacle)) {
+        return false;
+      }
+    }
+  
+    return true;
+}
+
+
+let countUpdate = 0
 const update = function() {
+    countUpdate++
     //limpiar
     // ctxF.restore()
     ctxB.clearRect(0,0,800,600);
     // ctxF.clearRect(0,0,800,600);
 
     //recalcular (incorporar obstáculos)
-
-    obstacles.forEach((obstacle) => {
-        if (!((player.y > (obstacle.y + obstacle.h)) || (player.x > (obstacle.x + obstacle.w)) || ((player.x + player.w) < obstacle.x) || ((player.y + player.h) < obstacle.y))) {
-            player.wallCollision = true;
-        }
-        
-    })
-
-
-
-
 
 
     //redibujar
