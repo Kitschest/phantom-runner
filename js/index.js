@@ -1,91 +1,4 @@
-//Coordenadas
-
-/* tiles = [
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0},
-    {x: 0, y: 0}, {x: 0, y: 0}, {x: 0, y: 0}, ] */
-
-
-
-
-const x1 = 0;
-const x2 = 20;
-const x3 = 40
-const x4 = 60
-const x5 = 80
-const x6 = 100
-const x7 = 120
-const x8 = 140
-const x9 = 160
-const x10 = 180
-const x11 = 200
-const x12 = 220
-const x13 = 240
-const x14 = 260
-const x15 = 280
-const x16 = 300
-const x17 = 320
-const x18 = 340
-const x19 = 360
-const x20 = 380
-const x21 = 400
-const x22 = 420
-const x23 = 440
-const x24 = 460
-const x25 = 480
-const x26 = 500
-const x27 = 520
-const x28 = 540
-const x29 = 560
-const x30 = 580
-const x31 = 600
-const x32 = 620
-const x33 = 640
-const x34 = 660
-const x35 = 680
-const x36 = 700
-const x37 = 720
-const x38 = 740
-const x39 = 760
-const x40 = 780
-
-
-
-const y1 = 0;
-const y2 = 20;
-const y3 = 40
-const y4 = 60
-const y5 = 80
-const y6 = 100
-const y7 = 120
-const y8 = 140
-const y9 = 160
-const y10 = 180
-const y11 = 200
-const y12 = 220
-const y13 = 240
-const y14 = 260
-const y15 = 280
-const y16 = 300
-const y17 = 320
-const y18 = 340
-const y19 = 360
-const y20 = 380
-const y21 = 400
-const y22 = 420
-const y23 = 440
-const y24 = 460
-const y25 = 480
-const y26 = 500
-const y27 = 520
-const y28 = 540
-const y29 = 560
-const y30 = 580
+  
 
 /* class Game {
     constructor {
@@ -99,39 +12,17 @@ const y30 = 580
 
 let canvasB = document.getElementById("canvasBack");
 let ctxB = canvasB.getContext("2d");
-let canvasF = document.getElementById("canvasFront");
-let ctxF = canvasF.getContext("2d");
+/* let canvasF = document.getElementById("canvasFront");
+let ctxF = canvasF.getContext("2d"); */
 
 
 //Player animation images
 let playerSprite = document.createElement("img");
-playerSprite.src = "images/BILLY_BIT.png";
-
-// let playerUp1 = document.createElement("img");
-// playerUp1.src = "images/player/up1.png";
-// let playerUp2 = document.createElement("img");
-// playerUp2.src = "images/player/up2.png";
-
-// let playerRight1 = document.createElement("img");
-// playerRight1.src = "images/player/right1.png";
-// let playerRight2 = document.createElement("img");
-// playerRight2.src = "images/player/right2.png";
-
-// let playerDown1 = document.createElement("img");
-// playerDown1.src = "images/player/down1.png";
-// let playerDown2 = document.createElement("img");
-// playerDown2.src = "images/player/down2.png";
-
-// let playerLeft1 = document.createElement("img");
-// playerLeft1.src = "images/player/left1.png";
-// let playerLeft2 = document.createElement("img");
-// playerLeft2.src = "images/player/left2.png";
-
-
+playerSprite.src = "images/BILLY_BIT.png"; //"images/player1.png" 
 
 
 let background = document.createElement("img");
-background.src = "images/PhantomRunner1.2.png"
+background.src = "images/bg_grid.png"
 
 background.onload = () => {
     ctxB.drawImage(background,0,0,800,600)
@@ -140,11 +31,11 @@ background.onload = () => {
 let gradient = document.createElement("img");
 gradient.src = "images/LAYER2.png"
 
-
-ctxF.fillStyle = "black";
+//Esto es de cuando usábamos dos canvas.
+/* ctxF.fillStyle = "black";
 ctxF.fillRect(0,0,800,600);
 
-ctxF.save();
+ctxF.save(); */
 
 
 let direction = "standingDown";
@@ -152,19 +43,24 @@ let direction = "standingDown";
 const player = {
     
     x: 400,
-    y: 300,
-    arcX: 410,
-    arcY: 310,
+    y: 290,
+    w: 20, //18
+    h: 25, //23
+    // arcX: 410,
+    // arcY: 310,
     gradX: -393  ,  //355,
-    gradY: -290 ,  //255,
+    gradY: -295 ,  //255,
+    wallCollision: false,
 
     spritePositions: {
         standingUp: {x_ini: 0, y_ini: 48},
         up: [
             {x_ini: 16, y_ini: 48},{x_ini: 32, y_ini: 48}
         ],
-        standingRight: {x_ini: 0, y_ini: 32},
+        standingRight: //{x_ini: 510, y_ini: 0},
+        {x_ini: 0, y_ini: 32},
         right: [
+            // {x_ini: 100, y_ini: 0},{x_ini: 200, y_ini: 0}
             {x_ini: 47, y_ini: 32},{x_ini: 63, y_ini: 32}
         ],
         standingDown: {x_ini: 0, y_ini: 0},
@@ -177,73 +73,140 @@ const player = {
         ],
     },
 
+/* 
+    collisionCheck: function() {
+
+    } */
+
+
     recalculatePosition: function(incX, incY) {
-        this.x += incX;
-        this.arcX += incX;
-        this.gradX += incX;
-        this.y += incY;
-        this.arcY += incY;
-        this.gradY += incY;
+
+        if (!this.wallCollision) {
+            this.x += incX;
+            // this.arcX += incX;
+            this.gradX += incX;
+            this.y += incY;
+            // this.arcY += incY;
+            this.gradY += incY;
+        }
+        if (this.wallCollision) {
+            this.x -= incX;
+            this.gradX -= incX;
+            this.y -= incY;
+            this.gradY -= incY;
+            this.wallCollision = false;
+        }
+
+
+        
     },
 
     print: function() {
-        if (direction == "standingUp") {
-            ctxB.drawImage(playerSprite,this.spritePositions.standingUp.x_ini, this.spritePositions.standingUp.y_ini, 12,16,this.x,this.y,18,23)
-        }
-        if (direction == "standingRight") {
-            ctxB.drawImage(playerSprite,this.spritePositions.standingRight.x_ini, this.spritePositions.standingRight.y_ini, 12,16,this.x,this.y,18,23)
-        }
-        if (direction == "standingDown") {
-            ctxB.drawImage(playerSprite,this.spritePositions.standingDown.x_ini, this.spritePositions.standingDown.y_ini, 12,16,this.x,this.y,18,23)
-        }
-        if (direction == "standingLeft") {
-            ctxB.drawImage(playerSprite,this.spritePositions.standingLeft.x_ini, this.spritePositions.standingLeft.y_ini, 12,16,this.x,this.y,18,23)
-        }
-        if (direction == "up") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.up[0].x_ini, this.spritePositions.up[0].y_ini, 12,16,this.x,this.y,18,23)}
-            else {ctxB.drawImage(playerSprite,this.spritePositions.up[1].x_ini, this.spritePositions.up[1].y_ini,12,16, this.x,this.y,18,23)}
-        }
-        if (direction == "right") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.right[0].x_ini, this.spritePositions.right[0].y_ini, 12,16,this.x,this.y,18,23)}
-            else {ctxB.drawImage(playerSprite,this.spritePositions.right[1].x_ini, this.spritePositions.right[1].y_ini,12,16, this.x,this.y,18,23)}
-        }
-        if (direction == "down") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.down[0].x_ini, this.spritePositions.down[0].y_ini, 12,16,this.x,this.y,18,23)}
-            else {ctxB.drawImage(playerSprite,this.spritePositions.down[1].x_ini, this.spritePositions.down[1].y_ini,12,16, this.x,this.y,18,23)}
-        }
-        if (direction == "left") {
-            if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.left[0].x_ini, this.spritePositions.left[0].y_ini, 12,16,this.x,this.y,18,23)}
-            else {ctxB.drawImage(playerSprite,this.spritePositions.left[1].x_ini, this.spritePositions.left[1].y_ini,12,16, this.x,this.y,18,23)}
-        }
+        ctxB.fillStyle = "red";
+        ctxB.fillRect(this.x,this.y,this.w,this.h);
+
+
+        // if (direction == "standingUp") {
+        //     ctxB.drawImage(playerSprite,this.spritePositions.standingUp.x_ini, this.spritePositions.standingUp.y_ini, 12,16,this.x,this.y,this.w,this.h)
+        // }
+        // if (direction == "standingRight") {
+        //     ctxB.drawImage(playerSprite,this.spritePositions.standingRight.x_ini, this.spritePositions.standingRight.y_ini, /* 100, 100 */ 12,16,this.x,this.y,this.w,this.h)
+        // }
+        // if (direction == "standingDown") {
+        //     ctxB.drawImage(playerSprite,this.spritePositions.standingDown.x_ini, this.spritePositions.standingDown.y_ini, 12,16,this.x,this.y,this.w,this.h)
+        // }
+        // if (direction == "standingLeft") {
+        //     ctxB.drawImage(playerSprite,this.spritePositions.standingLeft.x_ini, this.spritePositions.standingLeft.y_ini, 12,16,this.x,this.y,this.w,this.h)
+        // }
+        // if (direction == "up") {
+        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.up[0].x_ini, this.spritePositions.up[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
+        //     else {ctxB.drawImage(playerSprite,this.spritePositions.up[1].x_ini, this.spritePositions.up[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
+        // }
+        // if (direction == "right") {
+        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.right[0].x_ini, this.spritePositions.right[0].y_ini, /* 100, 100 */ 12,16,this.x,this.y,this.w,this.h)}
+        //     else {ctxB.drawImage(playerSprite,this.spritePositions.right[1].x_ini, this.spritePositions.right[1].y_ini,/* 100, 100 */ 12,16, this.x,this.y,this.w,this.h)}
+        // }
+        // if (direction == "down") {
+        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.down[0].x_ini, this.spritePositions.down[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
+        //     else {ctxB.drawImage(playerSprite,this.spritePositions.down[1].x_ini, this.spritePositions.down[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
+        // }
+        // if (direction == "left") {
+        //     if (iWalk%2 == 0) {ctxB.drawImage(playerSprite,this.spritePositions.left[0].x_ini, this.spritePositions.left[0].y_ini, 12,16,this.x,this.y,this.w,this.h)}
+        //     else {ctxB.drawImage(playerSprite,this.spritePositions.left[1].x_ini, this.spritePositions.left[1].y_ini,12,16, this.x,this.y,this.w,this.h)}
+        // }
     }
 }
 
 
-/* class Obstacle {
-    constructor (x,y)
-} */
+colissionObjects = [
+    {x_ini: 0, y_ini: 0, x_end: 40, y_end: 2}, //top wall
+    {x_ini: -1, y_ini: 0, x_end: 0, y_end: 40}, //left wall
+    {x_ini: 40, y_ini: 0, x_end: 41, y_end: 30}, //right wall
+    {x_ini: 0, y_ini: 30, x_end: 41, y_end: 31} //bottom wall
+]
+
+
+class ColissionObject {
+    constructor (x_ini, y_ini, x_end, y_end) {
+        this.x = x_ini * 20;
+        this.y = y_ini * 20;
+        this.w = Math.abs((x_ini + x_end) * 20)
+        this.h = (y_ini + y_end) * 20;
+    }
+
+    printObject() {
+        ctxB.fillStyle = "green";
+        ctxB.fillRect(this.x,this.y,this.w,this.h);
+
+    }
+}
+
+let topWall = new ColissionObject(0,0,40,2);
+let leftWall = new ColissionObject(-1,0,0,40)
+let rigthWall = new ColissionObject(40,0,41,30)
+let bottomWall = new ColissionObject(0,30,41,31)
+let obstacles = [];
+obstacles.push(topWall);
+obstacles.push(leftWall);
+obstacles.push(rigthWall);
+obstacles.push(bottomWall);
+
+console.log("obstacles",obstacles)
+
 
 
 const update = function() {
     //limpiar
-    ctxF.restore()
+    // ctxF.restore()
     ctxB.clearRect(0,0,800,600);
-    ctxF.clearRect(0,0,800,600);
+    // ctxF.clearRect(0,0,800,600);
 
     //recalcular (incorporar obstáculos)
 
+    obstacles.forEach((obstacle) => {
+        if (!((player.y > (obstacle.y + obstacle.h)) || (player.x > (obstacle.x + obstacle.w)) || ((player.x + player.w) < obstacle.x) || ((player.y + player.h) < obstacle.y))) {
+            player.wallCollision = true;
+        }
+        
+    })
+
+
+
+
+
 
     //redibujar
-    // ctxB.fillStyle = "yellow";
-    // ctxB.fillRect(0,0,800,600);
     ctxB.drawImage(background,0,0,800,600);
 
-    ctxB.fillStyle = "green";
+/*     ctxB.fillStyle = "green";
     ctxB.fillRect(x16,y16,20,20);
-    ctxB.fillRect(x17,y16,20,20);
+    ctxB.fillRect(x17,y16,20,20); */
 
 
     player.print();
+    obstacles.forEach((obstacle)=>{obstacle.printObject()})
+
+    //la actual versión no requiere de dos canvas!!
 
 /*     ctxF.fillStyle = "rgba(0, 0, 0, 0.7)";
     ctxF.fillRect(0,0,800,600);
@@ -255,9 +218,10 @@ const update = function() {
     ctxF.stroke();
     ctxF.clip();
     ctxF.clearRect(0,0,800,600); */
-    ctxF.drawImage(gradient,player.gradX,player.gradY,1600,1200)
+   
+    // ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) *******
 
-    //ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
+    // ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
 }
 
 let intervalId = setInterval(update,60);
@@ -284,6 +248,8 @@ document.body.addEventListener("keydown", (e)=>{
         clearTimeout(timeoutIdRight)
         clearTimeout(timeoutIdDown)
         clearTimeout(timeoutIdLeft)
+        
+
     }
     if(e.key == "ArrowDown" || e.key == "s") {
         player.recalculatePosition(0,20);
