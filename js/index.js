@@ -11,8 +11,11 @@ playerSprite.src = "./images/BILLY_BIT.png";
 let background = document.createElement("img");
 background.src = "./images/canvas-background.png" //"./images/main-background.png"
 
+let intro = document.createElement("img");
+intro.src = "images/intro.png"
+
 background.onload = () => {
-    ctxB.drawImage(background,0,0,800,600)
+    ctxB.drawImage(intro,0,0,800,600)
 }
 
 let gradient = document.createElement("img");
@@ -276,12 +279,17 @@ const update = function() {
     // ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
 }
 
-
-let intervalId = setInterval(update,60);
+let intervalId = null
+let start = function startGame(){
+    intervalId = setInterval(update,60);
+}
 
 function gameOver() {    
     ctxB.drawImage(gameOverImg, 50, 105, 700, 445)
     clearInterval(intervalId);
+    start = function refreshWebsite() {
+        location. reload()
+    }
 }
 
 
@@ -420,4 +428,4 @@ document.querySelector('#heart-icon>img').classList.add("heart-life")
       }
   })
 
-  
+  document.getElementById("play-button").addEventListener("click",start)

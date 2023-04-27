@@ -35,14 +35,14 @@ html {
     z-index: 1;
   }
 
-  #reset-button {
+/*   #reset-button {
     position: absolute;
-    top: 380px; /* adjust to desired distance from top */
-    left: 50px; /* adjust to desired distance from left */
-    width: 200px; /* adjust to desired size */
-    height: auto; /* maintain aspect ratio */
+    top: 380px; 
+    left: 50px; 
+    width: 200px;  
+    height: auto; 
     z-index: 1;
-  }
+  } */
   
   
 
@@ -94,8 +94,9 @@ canvas {
  
 
   #heart-icon {
-    margin-left:325px;
+    margin-left:40vw;
     margin-top: -20px;
+    
   }
   
   .heart-life {
@@ -105,7 +106,7 @@ canvas {
     margin-top: 25px;
   }
   
-  #battery-icon {
+/*   #battery-icon {
     margin-left: 750px;
     margin-top: -95px;
   }
@@ -115,7 +116,7 @@ canvas {
     height: auto;
     padding: 5px;
     margin-top: 25px;
-  }
+  } */
 
 
   
