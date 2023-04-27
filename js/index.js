@@ -32,6 +32,12 @@ ctxF.fillRect(0,0,800,600);
 ctxF.save(); */
 
 
+// HEARTS DISPLAY
+let hearts = document.createElement("img");
+hearts.src = ""
+
+
+
 let direction = "standingDown";
 
 
@@ -45,7 +51,7 @@ const player = {
     // arcY: 310,
     gradX: -393  ,  //355,
     gradY: -295 ,  //255,
-    ghostCollisions: 0,
+    countGhostCollisions: 0,
 
     direction: "standingDown",
 
@@ -77,8 +83,8 @@ const player = {
         for (let i = 0; i < ghosts.length; i++) {
             let ghost = ghosts[i];
             if (isColliding(this, ghost)) {
-            this.ghostCollisions++
-                if (this.ghostCollisions < 5) {
+            this.countGhostCollisions++
+                if (this.countGhostCollisions < 5) {
                     this.x = 401
                     this.y = 290
                     this.gradX = -393
@@ -119,8 +125,6 @@ const player = {
         // ctxB.fillRect(this.x,this.y,this.w,this.h);
 
 
-        // CAMBIAR TODOS LOS DIRECTION POR THIS.DIRECTION (Y TB LOS DE LOS EVENT LISTENERS)
-
         if (direction == "standingUp") {
             ctxB.drawImage(playerSprite,this.spritePositions.standingUp.x_ini, this.spritePositions.standingUp.y_ini, 12,16,this.x,this.y,this.w,this.h)
         }
@@ -156,47 +160,6 @@ const player = {
 
 
   //COLLISION WITH OBSTACLES
-
-
-/* colissionObjects = [
-    {x_ini: 0, y_ini: 0, x_end: 40, y_end: 2}, //top wall
-    {x_ini: -1, y_ini: 0, x_end: 0, y_end: 40}, //left wall
-    {x_ini: 40, y_ini: 0, x_end: 41, y_end: 30}, //right wall
-    {x_ini: 0, y_ini: 30, x_end: 41, y_end: 31} //bottom wall
-] */
-
-
-//OBSTACLES = ONLY THE FOUR EXTERNAL WALLS. 
-
-
-/* class ColissionObject {
-    constructor (x_ini, y_ini, x_end, y_end) {
-        this.x = x_ini * 20;
-        this.y = y_ini * 20;
-        this.w = Math.abs((x_ini + x_end) * 20)
-        this.h = (y_ini + y_end) * 20;
-    }
-
-    printObject() {
-        ctxB.fillStyle = "green";
-        ctxB.fillRect(this.x,this.y,this.w,this.h);
-
-    }
-}
-
-let topWall = new ColissionObject(0,0,40,1);
-let leftWall = new ColissionObject(-1,0,0,30) //aqui antes puse (-1,0,0,40) 
-let rigthWall = new ColissionObject(40,0,41,30)
-let bottomWall = new ColissionObject(0,30,41,31)
-let obstacles = [];
-obstacles.push(topWall);
-obstacles.push(leftWall);
-obstacles.push(rigthWall);
-obstacles.push(bottomWall);
-
-console.log("obstacles",obstacles) */
-
-//-------------------
 
 const obstacles = [
     // obstacle data here:
@@ -255,17 +218,13 @@ let ghosts = []
 let countUpdate = 0
 const update = function() {
     countUpdate++
-    //limpiar
+
+    //CLEAN
     // ctxF.restore()
     ctxB.clearRect(0,0,800,600);
     // ctxF.clearRect(0,0,800,600);
 
-
-/*     if (countUpdate%30 == 0) {
-        let ghost = new Ghost;
-        ghosts.push(ghost)
-    
-    } */
+    //GENERATE GHOSTS
     if (countUpdate%35 == 0) {
         let ghostTop = new GhostTop;
         let ghostLeft = new GhostLeft;
@@ -275,16 +234,26 @@ const update = function() {
         ghosts.push(ghostLeft)
         ghosts.push(ghostRight)
         ghosts.push(ghostBottom)
+    }  
+
+    //CHECK LIFE
+    if (player.countGhostCollisions == 0) {
+        hearts.src = "images/life-5.png"
+    } else if (player.countGhostCollisions == 1) {
+        hearts.src = "images/life-4.png"
+    } else if (player.countGhostCollisions == 2) {
+        hearts.src = "images/life-3.png"
+    } else if (player.countGhostCollisions == 3) {
+        hearts.src = "images/life-2.png"
+    } else {
+        hearts.src = "images/life-1.png"
     }
 
-
-
+    //REDRAW
     ctxB.drawImage(background, 0, 0, 800, 600);
 
-
-
     player.print();
-    
+      
     ghosts.forEach((ghost) => {
         ghost.print()
     })
@@ -313,13 +282,9 @@ let intervalId = setInterval(update,60);
 function gameOver() {    
     ctxB.drawImage(gameOverImg, 50, 105, 700, 445)
     clearInterval(intervalId);
+}
 
-    }
 
-
-// GHOST
-// let ghostSprite = document.createElement("img");
-// ghostSprite.src = "./images/ghost1.png";
 
 class Ghost {
     constructor() {
@@ -383,6 +348,12 @@ class GhostBottom extends Ghost {
 let ghostTop = new GhostTop;
 ghosts.push(ghostTop)
 
+
+
+
+
+document.querySelector('#heart-icon').appendChild(hearts)
+document.querySelector('#heart-icon>img').classList.add("heart-life")
   
 
 

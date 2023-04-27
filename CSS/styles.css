@@ -99,8 +99,8 @@ canvas {
   }
   
   .heart-life {
-    width: 200px;
-    height: auto;
+    width: auto;
+    height: 55px;
     padding: 5px;
     margin-top: 25px;
   }
