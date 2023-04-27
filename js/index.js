@@ -1,17 +1,15 @@
+// start
 
 let canvasB = document.getElementById("canvasBack");
 let ctxB = canvasB.getContext("2d");
 /* let canvasF = document.getElementById("canvasFront");
 let ctxF = canvasF.getContext("2d"); */
 
-
-//Player animation images
 let playerSprite = document.createElement("img");
-playerSprite.src = "images/BILLY_BIT.png"; //"images/player1.png" 
-
+playerSprite.src = "./images/BILLY_BIT.png";
 
 let background = document.createElement("img");
-background.src = "images/bg_grid.png"
+background.src = "./images/Sin_titulo.png" //"./images/main-background.png"
 
 background.onload = () => {
     ctxB.drawImage(background,0,0,800,600)
@@ -19,6 +17,9 @@ background.onload = () => {
 
 let gradient = document.createElement("img");
 gradient.src = "images/LAYER2.png"
+
+let ghostSprite = document.createElement("img");
+ghostSprite.src = "./images/ghost1.png";
 
 //Esto es de cuando usábamos dos canvas.
 /* ctxF.fillStyle = "black";
@@ -84,6 +85,7 @@ const player = {
             }
         }        
     },
+    
 
     print: function() {
         // ctxB.fillStyle = "red";
@@ -226,28 +228,19 @@ const update = function() {
     ctxB.clearRect(0,0,800,600);
     // ctxF.clearRect(0,0,800,600);
 
-    //recalcular (incorporar obstáculos)
+    ctxB.drawImage(background, 0, 0, 800, 600);
 
-
-    //redibujar
-    ctxB.drawImage(background,0,0,800,600);
-
-/*     ctxB.fillStyle = "green";
-    ctxB.fillRect(x16,y16,20,20);
-    ctxB.fillRect(x17,y16,20,20); */
 
 
     player.print();
-    /* obstacles.forEach((obstacle)=>{obstacle.printObject()}) */
+    ghost.print(); // Add this line to draw the Ghost
 
-    //la actual versión no requiere de dos canvas!!
+    // ctxF.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
-/*     ctxF.fillStyle = "rgba(0, 0, 0, 0.7)";
-    ctxF.fillRect(0,0,800,600);
+    checkGhostCollision(); // Add this line to check for collisions
 
-    ctxF.save()
 
-    ctxF.beginPath()
+    /* ctxF.beginPath()
     ctxF.arc(player.arcX,player.arcY,50,0,2*Math.PI);
     ctxF.stroke();
     ctxF.clip();
@@ -260,12 +253,6 @@ const update = function() {
 }
 
 let intervalId = setInterval(update,60);
-
-
-
-
-
-
 
 let timeoutIdUp
 let timeoutIdRight
@@ -329,3 +316,105 @@ document.body.addEventListener("keyup", (e)=>{
         timeoutIdLeft = setTimeout(() => {direction = "standingLeft"}, 400)
     }
 })
+
+
+// // new changes //
+
+
+// const obstacles = [
+//     // obstacle data here:
+
+//     {x: 0, y: 0, w: 220, h: 40}, 
+//     {x: 220, y: 0, w: 40, h: 100}, 
+//     {x: 260, y: 0, w: 540, h: 40},
+//     {x: 220, y: 120, w: 40, h: 160},
+//     {x: 260, y: 160, w: 160, h: 60},
+//     {x: 440, y: 160, w: 160, h: 60}, 
+//     {x: 560, y: 220, w: 40, h: 60}, 
+//     {x: 600, y: 180, w: 100, h: 60},
+//     {x: 720, y: 180, w: 80, h: 60}, 
+//     {x: 0, y: 380, w: 80, h: 60}, 
+//     {x: 100, y: 380, w: 160, h: 60},
+//     {x: 220, y: 300, w: 40, h: 80}, 
+//     {x: 240, y: 400, w: 80, h: 60}, 
+//     {x: 340, y: 400, w: 160, h: 60}, 
+//     {x: 520, y: 400, w: 80, h: 60},
+//     {x: 560, y: 300, w: 40, h: 100},
+//     {x: 580, y: 420, w: 180, h: 60}, 
+//     {x: 780, y: 420, w: 20, h: 60},
+//     {x: 400, y: 460, w: 40, h: 60}, 
+//     {x: 400, y: 540, w: 40, h: 60},    
+//   ];
+
+//   function isColliding(rect1, rect2) {
+//     return rect1.x < rect2.x + rect2.w &&
+//            rect1.x + rect1.w > rect2.x &&
+//            rect1.y < rect2.y + rect2.h &&
+//            rect1.y + rect1.h > rect2.y;
+//   }
+
+//   function canMoveTo(newX, newY, playerWidth, playerHeight) {
+//     const playerRect = {
+//       x: newX,
+//       y: newY,
+//       w: playerWidth,
+//       h: playerHeight
+//     };
+  
+//     for (const obstacle of obstacles) {
+//       if (isColliding(playerRect, obstacle)) {
+//         return false;
+//       }
+//     }
+  
+//     return true;
+//   }
+
+//   function movePlayer(newX, newY) {
+//     if (canMoveTo(newX, newY, playerWidth, playerHeight)) {
+//       playerX = newX;
+//       playerY = newY;
+//       draw();
+//     }
+//   }
+
+//   function draw() {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+//     ctx.fillStyle = 'black';
+//     for (const obstacle of obstacles) {
+//       ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
+//     }
+
+//     ctx.drawImage(playerImg, playerX, playerY, playerWidth, playerHeight);
+
+
+// draw();
+
+// movePlayer(playerX + 5, playerY);
+
+// }
+
+// GHOST
+
+const ghost = {
+    x: 200,
+    y: 200,
+    width: 18,
+    height: 23,
+
+    print: function() {
+        ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
+    }
+};
+
+function checkGhostCollision() {
+    if (isColliding(player, ghost)) {
+        player.x = 400;
+        player.y = 300;
+        player.arcX = 410;
+        player.arcY = 310;
+        player.gradX = -393;
+        player.gradY = -290;
+    }
+}
