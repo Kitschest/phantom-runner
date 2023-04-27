@@ -1,32 +1,3 @@
-  
-
-const game = {
-    canvasB: document.getElementById("canvasBack"),
-    ctxB: canvasB.getContext("2d"),
-    // canvasF: document.getElementById("canvasFront"),
-    // ctxF: canvasF.getContext("2d"),
-
-    background: document.createElement("img"),
-    background.src = "images/bg_grid.png"
-
-    background.onload = () => {
-        ctxB.drawImage(background,0,0,800,600)
-    }
-
-    player: {
-        //IMAGES
-        playerSprite: document.createElement("img"),
-        playerSprite.src: "images/BILLY_BIT.png", //"images/player1.png"         
-
-        let gradient = document.createElement("img");
-        gradient.src = "images/LAYER2.png"
-
-
-
-    }
-
-}
-
 
 let canvasB = document.getElementById("canvasBack");
 let ctxB = canvasB.getContext("2d");
@@ -165,8 +136,8 @@ const player = {
 
 //OBSTACLES = ONLY THE FOUR EXTERNAL WALLS. 
 
-/* 
-class ColissionObject {
+
+/* class ColissionObject {
     constructor (x_ini, y_ini, x_end, y_end) {
         this.x = x_ini * 20;
         this.y = y_ini * 20;
@@ -267,7 +238,7 @@ const update = function() {
 
 
     player.print();
-    obstacles.forEach((obstacle)=>{obstacle.printObject()})
+    /* obstacles.forEach((obstacle)=>{obstacle.printObject()}) */
 
     //la actual versión no requiere de dos canvas!!
 
@@ -282,7 +253,8 @@ const update = function() {
     ctxF.clip();
     ctxF.clearRect(0,0,800,600); */
    
-    // ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) *******
+    //ESTA ES LA LÍNEA DEL GRADIENTE
+    ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
 
     // ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
 }
@@ -303,7 +275,7 @@ let iWalk = 0
 
 
 document.body.addEventListener("keydown", (e)=>{
-    if(e.key == "ArrowUp" || e.key == "w") {
+    if(e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
         player.recalculatePosition(0,-20);
         direction = "up";
         iWalk++;
@@ -314,7 +286,7 @@ document.body.addEventListener("keydown", (e)=>{
         
 
     }
-    if(e.key == "ArrowDown" || e.key == "s") {
+    if(e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
         player.recalculatePosition(0,20);
         direction = "down";
         iWalk++;
@@ -323,7 +295,7 @@ document.body.addEventListener("keydown", (e)=>{
         clearTimeout(timeoutIdDown)
         clearTimeout(timeoutIdLeft)
     }
-    if(e.key == "ArrowLeft" || e.key == "a") {
+    if(e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
         player.recalculatePosition(-20, 0);
         direction = "left";
         iWalk++;
@@ -332,7 +304,7 @@ document.body.addEventListener("keydown", (e)=>{
         clearTimeout(timeoutIdDown)
         clearTimeout(timeoutIdLeft)
     }
-    if(e.key == "ArrowRight" || e.key == "d") {
+    if(e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
         player.recalculatePosition(20, 0);
         direction = "right";
         iWalk++;
@@ -344,16 +316,16 @@ document.body.addEventListener("keydown", (e)=>{
 })
 
 document.body.addEventListener("keyup", (e)=>{
-    if(e.key == "ArrowUp" || e.key == "w") {
+    if(e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
         timeoutIdUp = setTimeout(() => {direction = "standingUp"}, 400)
     }
-    if(e.key == "ArrowRight" || e.key == "d") {
+    if(e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
         timeoutIdRight = setTimeout(() => {direction = "standingRight"}, 400)
     }
-    if(e.key == "ArrowDown" || e.key == "s") {
+    if(e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
         timeoutIdDown = setTimeout(() => {direction = "standingDown"}, 400)
     }
-    if(e.key == "ArrowLeft" || e.key == "a") {
+    if(e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
         timeoutIdLeft = setTimeout(() => {direction = "standingLeft"}, 400)
     }
 })
