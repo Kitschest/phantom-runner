@@ -18,10 +18,10 @@ background.onload = () => {
 let gradient = document.createElement("img");
 gradient.src = "images/LAYER2.png"
 
-// let ghostSprite = document.createElement("img");
-// ghostSprite.src = "./images/ghost1.png";
+let ghostSprite = document.createElement("img");
+ghostSprite.src = "./images/ghost1.png";
 
-//Esto es de cuando usábamos dos canvas.
+//Esto es de cuando usábamos dos canvas:
 /* ctxF.fillStyle = "black";
 ctxF.fillRect(0,0,800,600);
 
@@ -219,7 +219,7 @@ function canMoveTo(newX, newY, playerWidth, playerHeight) {
     return true;
 }
 
-
+let ghosts = []
 let countUpdate = 0
 const update = function() {
     countUpdate++
@@ -228,16 +228,38 @@ const update = function() {
     ctxB.clearRect(0,0,800,600);
     // ctxF.clearRect(0,0,800,600);
 
+
+/*     if (countUpdate%30 == 0) {
+        let ghost = new Ghost;
+        ghosts.push(ghost)
+    
+    } */
+    if (countUpdate%50 == 0) {
+        let ghostTop = new GhostTop;
+        let ghostLeft = new GhostLeft;
+        let ghostRight = new GhostRight;
+        let ghostBottom = new GhostBottom;
+        ghosts.push(ghostTop)
+        ghosts.push(ghostLeft)
+        ghosts.push(ghostRight)
+        ghosts.push(ghostBottom)
+    }
+
+
+
     ctxB.drawImage(background, 0, 0, 800, 600);
 
 
 
     player.print();
-    ghost.print(); // Add this line to draw the Ghost
+    
+    ghosts.forEach((ghost) => {
+        ghost.print()
+    })
 
     // ctxF.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
-    checkGhostCollision(); // Add this line to check for collisions
+    //checkGhostCollision(); // Add this line to check for collisions
 
 
     /* ctxF.beginPath()
@@ -247,7 +269,7 @@ const update = function() {
     ctxF.clearRect(0,0,800,600); */
    
     //ESTA ES LA LÍNEA DEL GRADIENTE
-    // ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
+    //ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
 
     // (Esta es la línea del gradiente de cuando usábamos dos canvas y la capa superior era black)
     // ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
@@ -322,7 +344,7 @@ document.body.addEventListener("keyup", (e)=>{
 // // new changes //
 
 
-// const obstacles = [
+/* // const obstacles = [
 //     // obstacle data here:
 
 //     {x: 0, y: 0, w: 220, h: 40}, 
@@ -394,39 +416,82 @@ document.body.addEventListener("keyup", (e)=>{
 
 // movePlayer(playerX + 5, playerY);
 
-// }
+// } */
 
 // GHOST
-let ghostSprite = document.createElement("img");
-ghostSprite.src = "./images/ghost1.png";
+// let ghostSprite = document.createElement("img");
+// ghostSprite.src = "./images/ghost1.png";
 
-const ghost = {
-    x: 200,
-    y: 200,
-    width: 18,
-    height: 23,
-    speedX: 2, // horizontal movement speed
-    speedY: 1, // vertical movement speed
+class Ghost {
+    constructor() {
+        this.x = 200;
+        this.y = 200;
+        this.width = 18
+        this.height = 23
+        this.speedX = 2 // horizontal movement speed
+        this.speedY = 1 // vertical movement speed        
+    }
 
-    print: function() {
+    print() {
         // Update ghost position based on its speed
         this.x += this.speedX;
         this.y += this.speedY;
 
-        // Check if ghost has reached canvas boundaries and reverse direction if necessary
-        if (this.x < 0 || this.x + this.width > canvasBack.width) {
-            this.speedX *= -1;
-        }
-        if (this.y < 0 || this.y + this.height > canvasBack.height) {
-            this.speedY *= -1;
-        }
 
         // Draw ghost image at new position
         ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
     }
 };
 
-function checkGhostCollision() {
+class GhostTop extends Ghost {    
+    constructor() {
+        super()
+        this.x = Math.random() * 800;
+        this.y = 0
+    } 
+};
+
+class GhostLeft extends Ghost {    
+    constructor() {
+        super()
+        this.x = 0
+        this.y = Math.random() * 600;
+        this.speedX = 2
+        this.speedY = -1
+    } 
+};
+
+class GhostRight extends Ghost {    
+    constructor() {
+        super()
+        this.x = 800;
+        this.y = Math.random() * 600
+        this.speedX = -2
+        this.speedY = 1
+    } 
+};
+
+class GhostBottom extends Ghost {    
+    constructor() {
+        super()
+        this.x = Math.random() * 800;
+        this.y = 600    
+        this.speedX = -2
+        this.speedY = -1
+    } 
+};
+
+
+//width,height,speedX,speedY
+
+
+
+
+
+
+
+
+/* function checkGhostCollision() {
     if (isColliding(player, ghost)) {
         player.x = 400;
         player.y = 300;
@@ -435,11 +500,11 @@ function checkGhostCollision() {
         player.gradX = -393;
         player.gradY = -290;
     }
-}
+} */
 
 
 // Spawn new ghost object with random position and velocity
-function spawnGhost() {
+/* function spawnGhost() {
     let ghost = {
       x: Math.random() * canvasBack.width,
       y: Math.random() * canvasBack.height,
@@ -493,7 +558,7 @@ function spawnGhost() {
     ghost.speedY = speed * Math.sin(angle);
   
     ghosts.push(ghost);
-  }
+  } */
   
 
 
