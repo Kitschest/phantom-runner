@@ -9,7 +9,7 @@ let playerSprite = document.createElement("img");
 playerSprite.src = "./images/BILLY_BIT.png";
 
 let background = document.createElement("img");
-background.src = "./images/Sin_titulo.png" //"./images/main-background.png"
+background.src = "./images/canvas-background.png" //"./images/main-background.png"
 
 background.onload = () => {
     ctxB.drawImage(background,0,0,800,600)
@@ -18,8 +18,8 @@ background.onload = () => {
 // let gradient = document.createElement("img");
 // gradient.src = "images/LAYER2.png"
 
-let ghostSprite = document.createElement("img");
-ghostSprite.src = "./images/ghost1.png";
+// let ghostSprite = document.createElement("img");
+// ghostSprite.src = "./images/ghost1.png";
 
 
 ctxF.fillStyle = "black";
@@ -200,26 +200,26 @@ document.body.addEventListener("keyup", (e)=>{
 const obstacles = [
     // obstacle data here:
 
-    {x: 0, y: 0, w: 220, h: 40}, 
-    {x: 220, y: 0, w: 40, h: 100}, 
-    {x: 260, y: 0, w: 540, h: 40},
-    {x: 220, y: 120, w: 40, h: 160},
-    {x: 260, y: 160, w: 160, h: 60},
-    {x: 440, y: 160, w: 160, h: 60}, 
-    {x: 560, y: 220, w: 40, h: 60}, 
-    {x: 600, y: 180, w: 100, h: 60},
-    {x: 720, y: 180, w: 80, h: 60}, 
-    {x: 0, y: 380, w: 80, h: 60}, 
-    {x: 100, y: 380, w: 160, h: 60},
-    {x: 220, y: 300, w: 40, h: 80}, 
-    {x: 240, y: 400, w: 80, h: 60}, 
-    {x: 340, y: 400, w: 160, h: 60}, 
-    {x: 520, y: 400, w: 80, h: 60},
-    {x: 560, y: 300, w: 40, h: 100},
-    {x: 580, y: 420, w: 180, h: 60}, 
-    {x: 780, y: 420, w: 20, h: 60},
-    {x: 400, y: 460, w: 40, h: 60}, 
-    {x: 400, y: 540, w: 40, h: 60},    
+    {x: 0,   y: 0,   w: 220, h: 40},  //1
+    {x: 220, y: 0,   w: 40,  h: 88}, //2
+    {x: 260, y: 0,   w: 540, h: 40},  //3
+    {x: 220, y: 120, w: 40,  h: 149}, //4
+    {x: 260, y: 160, w: 160, h: 60},  //5
+    {x: 440, y: 160, w: 160, h: 60},  //6
+    {x: 560, y: 220, w: 40,  h: 52},  //7
+    {x: 600, y: 180, w: 100, h: 60},  //8
+    {x: 720, y: 180, w: 80,  h: 60},  //9
+    {x: 0,   y: 380, w: 80,  h: 60},  //10
+    {x: 100, y: 380, w: 160, h: 60},  //11
+    {x: 220, y: 300, w: 40,  h: 80},  //12
+    {x: 240, y: 400, w: 80,  h: 60},  //13
+    {x: 340, y: 400, w: 160, h: 60},  //14
+    {x: 520, y: 400, w: 80,  h: 60},  //15
+    {x: 560, y: 300, w: 40,  h: 100}, //16
+    {x: 580, y: 420, w: 180, h: 60},  //17
+    {x: 780, y: 420, w: 20,  h: 60},  //18
+    {x: 400, y: 460, w: 40,  h: 48},  //19
+    {x: 400, y: 540, w: 40,  h: 60},  //20 
   ];
 
   function isColliding(rect1, rect2) {
@@ -272,14 +272,31 @@ movePlayer(playerX + 5, playerY);
 }
 
 // GHOST
+let ghostSprite = document.createElement("img");
+ghostSprite.src = "./images/ghost1.png";
 
 const ghost = {
     x: 200,
     y: 200,
     width: 18,
     height: 23,
+    speedX: 2, // horizontal movement speed
+    speedY: 1, // vertical movement speed
 
     print: function() {
+        // Update ghost position based on its speed
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Check if ghost has reached canvas boundaries and reverse direction if necessary
+        if (this.x < 0 || this.x + this.width > canvasBack.width) {
+            this.speedX *= -1;
+        }
+        if (this.y < 0 || this.y + this.height > canvasBack.height) {
+            this.speedY *= -1;
+        }
+
+        // Draw ghost image at new position
         ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
     }
 };
@@ -294,3 +311,64 @@ function checkGhostCollision() {
         player.gradY = -290;
     }
 }
+
+
+// Spawn new ghost object with random position and velocity
+function spawnGhost() {
+    let ghost = {
+      x: Math.random() * canvasBack.width,
+      y: Math.random() * canvasBack.height,
+      width: 18,
+      height: 23,
+      speedX: (Math.random() - 0.5) * 4, // horizontal movement speed (-2 to 2)
+      speedY: (Math.random() - 0.5) * 4, // vertical movement speed (-2 to 2)
+  
+      print: function() {
+        // Update ghost position based on its speed
+        this.x += this.speedX;
+        this.y += this.speedY;
+  
+        // Check if ghost has reached canvas boundaries and reverse direction if necessary
+        if (this.x < 0 || this.x + this.width > canvasBack.width) {
+          this.speedX *= -1;
+        }
+        if (this.y < 0 || this.y + this.height > canvasBack.height) {
+          this.speedY *= -1;
+        }
+  
+        // Draw ghost image at new position
+        ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
+  
+        // Check for collisions between ghosts and move them away from each other
+        for (let i = 0; i < ghosts.length; i++) {
+          let otherGhost = ghosts[i];
+          if (this !== otherGhost && isColliding(this, otherGhost)) {
+            // Move this ghost away from the other ghost
+            let dx = this.x - otherGhost.x;
+            let dy = this.y - otherGhost.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            let minDistance = this.width + otherGhost.width;
+            if (distance < minDistance) {
+              let moveX = dx * ((minDistance - distance) / distance);
+              let moveY = dy * ((minDistance - distance) / distance);
+              this.x += moveX;
+              this.y += moveY;
+              otherGhost.x -= moveX;
+              otherGhost.y -= moveY;
+            }
+          }
+        }
+      }
+    };
+  
+    // Generate random speed values for new ghost
+    let speed = Math.random() * 4;
+    let angle = Math.random() * Math.PI * 2;
+    ghost.speedX = speed * Math.cos(angle);
+    ghost.speedY = speed * Math.sin(angle);
+  
+    ghosts.push(ghost);
+  }
+  
+
+
