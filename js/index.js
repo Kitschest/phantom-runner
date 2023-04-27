@@ -21,6 +21,10 @@ gradient.src = "images/LAYER2.png"
 let ghostSprite = document.createElement("img");
 ghostSprite.src = "./images/ghost1.png";
 
+let gameOverImg = document.createElement("img");
+gameOverImg.src = "images/gameover.png";
+
+
 //Esto es de cuando usábamos dos canvas:
 /* ctxF.fillStyle = "black";
 ctxF.fillRect(0,0,800,600);
@@ -41,10 +45,11 @@ const player = {
     // arcY: 310,
     gradX: -393  ,  //355,
     gradY: -295 ,  //255,
+    ghostCollisions: 0,
 
     direction: "standingDown",
 
-    spritePositions: {
+    spritePositions: {                                    //BILLY_BIT.png
         standingUp: {x_ini: 0, y_ini: 48},
         up: [
             {x_ini: 16, y_ini: 48},{x_ini: 32, y_ini: 48}
@@ -65,16 +70,23 @@ const player = {
         ],
     },
 
+    
+
 
     checkGhostCollision: function() {
-        console.log("collision with ghost")
         for (let i = 0; i < ghosts.length; i++) {
             let ghost = ghosts[i];
             if (isColliding(this, ghost)) {
-               this.x = 401
-               this.y = 290
-               this.gradX = -393
-               this.gradY = -295
+            this.ghostCollisions++
+                if (this.ghostCollisions < 5) {
+                    this.x = 401
+                    this.y = 290
+                    this.gradX = -393
+                    this.gradY = -295
+                } else {
+                    gameOver()
+                }
+               
             }
         }
     },
@@ -139,6 +151,9 @@ const player = {
         }
     }
 }
+
+
+
 
   //COLLISION WITH OBSTACLES
 
@@ -251,7 +266,7 @@ const update = function() {
         ghosts.push(ghost)
     
     } */
-    if (countUpdate%50 == 0) {
+    if (countUpdate%35 == 0) {
         let ghostTop = new GhostTop;
         let ghostLeft = new GhostLeft;
         let ghostRight = new GhostRight;
@@ -286,14 +301,20 @@ const update = function() {
     ctxF.clearRect(0,0,800,600); */
    
     //ESTA ES LA LÍNEA DEL GRADIENTE
-    ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
+    // ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
 
     // (Esta es la línea del gradiente de cuando usábamos dos canvas y la capa superior era black)
     // ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
 }
 
+
 let intervalId = setInterval(update,60);
 
+function gameOver() {    
+    ctxB.drawImage(gameOverImg, 50, 105, 700, 445)
+    clearInterval(intervalId);
+
+    }
 
 
 // GHOST
@@ -429,63 +450,3 @@ ghosts.push(ghostTop)
   })
 
   
-// Spawn new ghost object with random position and velocity
-/* function spawnGhost() {
-    let ghost = {
-      x: Math.random() * canvasBack.width,
-      y: Math.random() * canvasBack.height,
-      width: 18,
-      height: 23,
-      speedX: (Math.random() - 0.5) * 4, // horizontal movement speed (-2 to 2)
-      speedY: (Math.random() - 0.5) * 4, // vertical movement speed (-2 to 2)
-  
-      print: function() {
-        // Update ghost position based on its speed
-        this.x += this.speedX;
-        this.y += this.speedY;
-  
-        // Check if ghost has reached canvas boundaries and reverse direction if necessary
-        if (this.x < 0 || this.x + this.width > canvasBack.width) {
-          this.speedX *= -1;
-        }
-        if (this.y < 0 || this.y + this.height > canvasBack.height) {
-          this.speedY *= -1;
-        }
-  
-        // Draw ghost image at new position
-        ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height); */
-  
-        // Check for collisions between ghosts and move them away from each other
-/* for (let i = 0; i < ghosts.length; i++) {
-    let ghost = ghosts[i];
-    if (this !== otherGhost && isColliding(this, otherGhost)) {
-      // Move this ghost away from the other ghost
-      let dx = this.x - otherGhost.x;
-      let dy = this.y - otherGhost.y;
-      let distance = Math.sqrt(dx * dx + dy * dy);
-      let minDistance = this.width + otherGhost.width;
-      if (distance < minDistance) {
-        let moveX = dx * ((minDistance - distance) / distance);
-        let moveY = dy * ((minDistance - distance) / distance);
-        this.x += moveX;
-        this.y += moveY;
-        otherGhost.x -= moveX;
-        otherGhost.y -= moveY;
-      }
-    }
-  } */
-
-        
-
-
-  /*    }
-    };
-  
-    // Generate random speed values for new ghost
-    let speed = Math.random() * 4;
-    let angle = Math.random() * Math.PI * 2;
-    ghost.speedX = speed * Math.cos(angle);
-    ghost.speedY = speed * Math.sin(angle);
-  
-    ghosts.push(ghost);
-  } */
