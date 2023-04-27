@@ -286,7 +286,7 @@ const update = function() {
     ctxF.clearRect(0,0,800,600); */
    
     //ESTA ES LA LÍNEA DEL GRADIENTE
-    //ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
+    ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
 
     // (Esta es la línea del gradiente de cuando usábamos dos canvas y la capa superior era black)
     // ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
