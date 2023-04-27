@@ -281,15 +281,15 @@ const update = function() {
 
 let intervalId = null
 let start = function startGame(){
-    intervalId = setInterval(update,60);
+    intervalId = setInterval(update,60)
 }
 
-function gameOver() {    
+
+function gameOver() {   
+    
     ctxB.drawImage(gameOverImg, 50, 105, 700, 445)
     clearInterval(intervalId);
-    start = function refreshWebsite() {
-        location. reload()
-    }
+    
 }
 
 
