@@ -9,7 +9,7 @@ let playerSprite = document.createElement("img");
 playerSprite.src = "./images/BILLY_BIT.png";
 
 let background = document.createElement("img");
-background.src = "./images/Sin_titulo.png" //"./images/main-background.png"
+background.src = "./images/canvas-background.png" //"./images/main-background.png"
 
 background.onload = () => {
     ctxB.drawImage(background,0,0,800,600)
@@ -18,8 +18,8 @@ background.onload = () => {
 let gradient = document.createElement("img");
 gradient.src = "images/LAYER2.png"
 
-let ghostSprite = document.createElement("img");
-ghostSprite.src = "./images/ghost1.png";
+// let ghostSprite = document.createElement("img");
+// ghostSprite.src = "./images/ghost1.png";
 
 //Esto es de cuando usábamos dos canvas.
 /* ctxF.fillStyle = "black";
@@ -397,14 +397,31 @@ document.body.addEventListener("keyup", (e)=>{
 // }
 
 // GHOST
+let ghostSprite = document.createElement("img");
+ghostSprite.src = "./images/ghost1.png";
 
 const ghost = {
     x: 200,
     y: 200,
     width: 18,
     height: 23,
+    speedX: 2, // horizontal movement speed
+    speedY: 1, // vertical movement speed
 
     print: function() {
+        // Update ghost position based on its speed
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Check if ghost has reached canvas boundaries and reverse direction if necessary
+        if (this.x < 0 || this.x + this.width > canvasBack.width) {
+            this.speedX *= -1;
+        }
+        if (this.y < 0 || this.y + this.height > canvasBack.height) {
+            this.speedY *= -1;
+        }
+
+        // Draw ghost image at new position
         ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
     }
 };
@@ -419,3 +436,64 @@ function checkGhostCollision() {
         player.gradY = -290;
     }
 }
+
+
+// Spawn new ghost object with random position and velocity
+function spawnGhost() {
+    let ghost = {
+      x: Math.random() * canvasBack.width,
+      y: Math.random() * canvasBack.height,
+      width: 18,
+      height: 23,
+      speedX: (Math.random() - 0.5) * 4, // horizontal movement speed (-2 to 2)
+      speedY: (Math.random() - 0.5) * 4, // vertical movement speed (-2 to 2)
+  
+      print: function() {
+        // Update ghost position based on its speed
+        this.x += this.speedX;
+        this.y += this.speedY;
+  
+        // Check if ghost has reached canvas boundaries and reverse direction if necessary
+        if (this.x < 0 || this.x + this.width > canvasBack.width) {
+          this.speedX *= -1;
+        }
+        if (this.y < 0 || this.y + this.height > canvasBack.height) {
+          this.speedY *= -1;
+        }
+  
+        // Draw ghost image at new position
+        ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
+  
+        // Check for collisions between ghosts and move them away from each other
+        for (let i = 0; i < ghosts.length; i++) {
+          let otherGhost = ghosts[i];
+          if (this !== otherGhost && isColliding(this, otherGhost)) {
+            // Move this ghost away from the other ghost
+            let dx = this.x - otherGhost.x;
+            let dy = this.y - otherGhost.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            let minDistance = this.width + otherGhost.width;
+            if (distance < minDistance) {
+              let moveX = dx * ((minDistance - distance) / distance);
+              let moveY = dy * ((minDistance - distance) / distance);
+              this.x += moveX;
+              this.y += moveY;
+              otherGhost.x -= moveX;
+              otherGhost.y -= moveY;
+            }
+          }
+        }
+      }
+    };
+  
+    // Generate random speed values for new ghost
+    let speed = Math.random() * 4;
+    let angle = Math.random() * Math.PI * 2;
+    ghost.speedX = speed * Math.cos(angle);
+    ghost.speedY = speed * Math.sin(angle);
+  
+    ghosts.push(ghost);
+  }
+  
+
+
