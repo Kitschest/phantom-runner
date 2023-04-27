@@ -1,4 +1,6 @@
 /* body {
+body {
+    overflow: hidden;
     background-image: url('./images/browser-background.png');
     background-size: cover;
     background-repeat: repeat;
@@ -6,6 +8,46 @@
     margin: 1;
     padding: 1;
 } */
+
+html { 
+  background: url(../images/background-image1.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#logo-img {
+    position: absolute;
+    top: 70px; /* adjust to desired distance from top */
+    left: 40px; /* adjust to desired distance from left */
+    width: 230px; /* adjust to desired size */
+    height: auto; /* maintain aspect ratio */
+    z-index: 1;
+  }
+
+
+#play-button {
+    position: absolute;
+    top: 270px; /* adjust to desired distance from top */
+    left: 50px; /* adjust to desired distance from left */
+    width: 200px; /* adjust to desired size */
+    height: auto; /* maintain aspect ratio */
+    z-index: 1;
+  }
+
+  #reset-button {
+    position: absolute;
+    top: 380px; /* adjust to desired distance from top */
+    left: 50px; /* adjust to desired distance from left */
+    width: 200px; /* adjust to desired size */
+    height: auto; /* maintain aspect ratio */
+    z-index: 1;
+  }
+  
+  
+
+
 
 #canvasBack {
     position: absolute;
@@ -22,6 +64,11 @@
     transform: translate(-50%, -50%);
     z-index: 2;
 }
+
+canvas {
+    display: block;
+    margin: 0 auto;
+  }
 
 #image {
     height: 15px;
