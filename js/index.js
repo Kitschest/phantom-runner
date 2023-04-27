@@ -30,12 +30,13 @@ ctxF.save(); */
 
 let direction = "standingDown";
 
+
 const player = {
     
     x: 401,
     y: 290,
-    w: 20, //18
-    h: 25, //23
+    w: 18, //18
+    h: 23, //23
     // arcX: 410,
     // arcY: 310,
     gradX: -393  ,  //355,
@@ -65,13 +66,27 @@ const player = {
     },
 
 
+    checkGhostCollision: function() {
+        console.log("collision with ghost")
+        for (let i = 0; i < ghosts.length; i++) {
+            let ghost = ghosts[i];
+            if (isColliding(this, ghost)) {
+               this.x = 401
+               this.y = 290
+               this.gradX = -393
+               this.gradY = -295
+            }
+        }
+    },
+
 
 
     recalculatePosition: function(incX, incY) {
         let newX = this.x + incX;
         let newY = this.y + incY;
-    
-        if (canMoveTo(newX, newY, 18, 23)) {
+
+       
+        if (canMoveTo(newX, newY, this.w, this.h)) {
             if (newX >= 0 && newX <= canvasB.width - 18) { // 18 is the player's width
                 this.x = newX;
                 // this.arcX += incX;
@@ -220,6 +235,8 @@ function canMoveTo(newX, newY, playerWidth, playerHeight) {
 }
 
 let ghosts = []
+
+
 let countUpdate = 0
 const update = function() {
     countUpdate++
@@ -259,7 +276,7 @@ const update = function() {
 
     // ctxF.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
-    //checkGhostCollision(); // Add this line to check for collisions
+    player.checkGhostCollision(); // Add this line to check for collisions
 
 
     /* ctxF.beginPath()
@@ -279,84 +296,6 @@ let intervalId = setInterval(update,60);
 
 
 
-
-// // new changes //
-
-
-/* // const obstacles = [
-//     // obstacle data here:
-
-//     {x: 0, y: 0, w: 220, h: 40}, 
-//     {x: 220, y: 0, w: 40, h: 100}, 
-//     {x: 260, y: 0, w: 540, h: 40},
-//     {x: 220, y: 120, w: 40, h: 160},
-//     {x: 260, y: 160, w: 160, h: 60},
-//     {x: 440, y: 160, w: 160, h: 60}, 
-//     {x: 560, y: 220, w: 40, h: 60}, 
-//     {x: 600, y: 180, w: 100, h: 60},
-//     {x: 720, y: 180, w: 80, h: 60}, 
-//     {x: 0, y: 380, w: 80, h: 60}, 
-//     {x: 100, y: 380, w: 160, h: 60},
-//     {x: 220, y: 300, w: 40, h: 80}, 
-//     {x: 240, y: 400, w: 80, h: 60}, 
-//     {x: 340, y: 400, w: 160, h: 60}, 
-//     {x: 520, y: 400, w: 80, h: 60},
-//     {x: 560, y: 300, w: 40, h: 100},
-//     {x: 580, y: 420, w: 180, h: 60}, 
-//     {x: 780, y: 420, w: 20, h: 60},
-//     {x: 400, y: 460, w: 40, h: 60}, 
-//     {x: 400, y: 540, w: 40, h: 60},    
-//   ];
-
-//   function isColliding(rect1, rect2) {
-//     return rect1.x < rect2.x + rect2.w &&
-//            rect1.x + rect1.w > rect2.x &&
-//            rect1.y < rect2.y + rect2.h &&
-//            rect1.y + rect1.h > rect2.y;
-//   }
-
-//   function canMoveTo(newX, newY, playerWidth, playerHeight) {
-//     const playerRect = {
-//       x: newX,
-//       y: newY,
-//       w: playerWidth,
-//       h: playerHeight
-//     };
-  
-//     for (const obstacle of obstacles) {
-//       if (isColliding(playerRect, obstacle)) {
-//         return false;
-//       }
-//     }
-  
-//     return true;
-//   }
-
-//   function movePlayer(newX, newY) {
-//     if (canMoveTo(newX, newY, playerWidth, playerHeight)) {
-//       playerX = newX;
-//       playerY = newY;
-//       draw();
-//     }
-//   }
-
-//   function draw() {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-//     ctx.fillStyle = 'black';
-//     for (const obstacle of obstacles) {
-//       ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
-//     }
-
-//     ctx.drawImage(playerImg, playerX, playerY, playerWidth, playerHeight);
-
-
-// draw();
-
-// movePlayer(playerX + 5, playerY);
-
-// } */
-
 // GHOST
 // let ghostSprite = document.createElement("img");
 // ghostSprite.src = "./images/ghost1.png";
@@ -365,8 +304,8 @@ class Ghost {
     constructor() {
         this.x = 200;
         this.y = 200;
-        this.width = 18
-        this.height = 23
+        this.w = 18
+        this.h = 23
         this.speedX = 2 // horizontal movement speed
         this.speedY = 1 // vertical movement speed        
     }
@@ -378,7 +317,7 @@ class Ghost {
 
 
         // Draw ghost image at new position
-        ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
+        ctxB.drawImage(ghostSprite, this.x, this.y, this.w, this.h);
     }
 };
 
@@ -420,84 +359,9 @@ class GhostBottom extends Ghost {
     } 
 };
 
+let ghostTop = new GhostTop;
+ghosts.push(ghostTop)
 
-//width,height,speedX,speedY
-
-
-
-
-
-
-
-
-/* function checkGhostCollision() {
-    if (isColliding(player, ghost)) {
-        player.x = 400;
-        player.y = 300;
-        player.arcX = 410;
-        player.arcY = 310;
-        player.gradX = -393;
-        player.gradY = -290;
-    }
-} */
-
-
-// Spawn new ghost object with random position and velocity
-/* function spawnGhost() {
-    let ghost = {
-      x: Math.random() * canvasBack.width,
-      y: Math.random() * canvasBack.height,
-      width: 18,
-      height: 23,
-      speedX: (Math.random() - 0.5) * 4, // horizontal movement speed (-2 to 2)
-      speedY: (Math.random() - 0.5) * 4, // vertical movement speed (-2 to 2)
-  
-      print: function() {
-        // Update ghost position based on its speed
-        this.x += this.speedX;
-        this.y += this.speedY;
-  
-        // Check if ghost has reached canvas boundaries and reverse direction if necessary
-        if (this.x < 0 || this.x + this.width > canvasBack.width) {
-          this.speedX *= -1;
-        }
-        if (this.y < 0 || this.y + this.height > canvasBack.height) {
-          this.speedY *= -1;
-        }
-  
-        // Draw ghost image at new position
-        ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height);
-  
-        // Check for collisions between ghosts and move them away from each other
-        for (let i = 0; i < ghosts.length; i++) {
-          let otherGhost = ghosts[i];
-          if (this !== otherGhost && isColliding(this, otherGhost)) {
-            // Move this ghost away from the other ghost
-            let dx = this.x - otherGhost.x;
-            let dy = this.y - otherGhost.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            let minDistance = this.width + otherGhost.width;
-            if (distance < minDistance) {
-              let moveX = dx * ((minDistance - distance) / distance);
-              let moveY = dy * ((minDistance - distance) / distance);
-              this.x += moveX;
-              this.y += moveY;
-              otherGhost.x -= moveX;
-              otherGhost.y -= moveY;
-            }
-          }
-        }
-      }
-    };
-  
-    // Generate random speed values for new ghost
-    let speed = Math.random() * 4;
-    let angle = Math.random() * Math.PI * 2;
-    ghost.speedX = speed * Math.cos(angle);
-    ghost.speedY = speed * Math.sin(angle);
-  
-    ghosts.push(ghost);
-  } */
   
 
 
@@ -563,3 +427,65 @@ class GhostBottom extends Ghost {
           timeoutIdLeft = setTimeout(() => {direction = "standingLeft"}, 400)
       }
   })
+
+  
+// Spawn new ghost object with random position and velocity
+/* function spawnGhost() {
+    let ghost = {
+      x: Math.random() * canvasBack.width,
+      y: Math.random() * canvasBack.height,
+      width: 18,
+      height: 23,
+      speedX: (Math.random() - 0.5) * 4, // horizontal movement speed (-2 to 2)
+      speedY: (Math.random() - 0.5) * 4, // vertical movement speed (-2 to 2)
+  
+      print: function() {
+        // Update ghost position based on its speed
+        this.x += this.speedX;
+        this.y += this.speedY;
+  
+        // Check if ghost has reached canvas boundaries and reverse direction if necessary
+        if (this.x < 0 || this.x + this.width > canvasBack.width) {
+          this.speedX *= -1;
+        }
+        if (this.y < 0 || this.y + this.height > canvasBack.height) {
+          this.speedY *= -1;
+        }
+  
+        // Draw ghost image at new position
+        ctxB.drawImage(ghostSprite, this.x, this.y, this.width, this.height); */
+  
+        // Check for collisions between ghosts and move them away from each other
+/* for (let i = 0; i < ghosts.length; i++) {
+    let ghost = ghosts[i];
+    if (this !== otherGhost && isColliding(this, otherGhost)) {
+      // Move this ghost away from the other ghost
+      let dx = this.x - otherGhost.x;
+      let dy = this.y - otherGhost.y;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+      let minDistance = this.width + otherGhost.width;
+      if (distance < minDistance) {
+        let moveX = dx * ((minDistance - distance) / distance);
+        let moveY = dy * ((minDistance - distance) / distance);
+        this.x += moveX;
+        this.y += moveY;
+        otherGhost.x -= moveX;
+        otherGhost.y -= moveY;
+      }
+    }
+  } */
+
+        
+
+
+  /*    }
+    };
+  
+    // Generate random speed values for new ghost
+    let speed = Math.random() * 4;
+    let angle = Math.random() * Math.PI * 2;
+    ghost.speedX = speed * Math.cos(angle);
+    ghost.speedY = speed * Math.sin(angle);
+  
+    ghosts.push(ghost);
+  } */
