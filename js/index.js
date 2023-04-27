@@ -277,68 +277,7 @@ const update = function() {
 
 let intervalId = setInterval(update,60);
 
-let timeoutIdUp
-let timeoutIdRight
-let timeoutIdDown
-let timeoutIdLeft
-let iWalk = 0
 
-
-document.body.addEventListener("keydown", (e)=>{
-    if(e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
-        player.recalculatePosition(0,-20);
-        direction = "up";
-        iWalk++;
-        clearTimeout(timeoutIdUp),
-        clearTimeout(timeoutIdRight)
-        clearTimeout(timeoutIdDown)
-        clearTimeout(timeoutIdLeft)
-        
-
-    }
-    if(e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
-        player.recalculatePosition(0,20);
-        direction = "down";
-        iWalk++;
-        clearTimeout(timeoutIdUp),
-        clearTimeout(timeoutIdRight)
-        clearTimeout(timeoutIdDown)
-        clearTimeout(timeoutIdLeft)
-    }
-    if(e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
-        player.recalculatePosition(-20, 0);
-        direction = "left";
-        iWalk++;
-        clearTimeout(timeoutIdUp),
-        clearTimeout(timeoutIdRight)
-        clearTimeout(timeoutIdDown)
-        clearTimeout(timeoutIdLeft)
-    }
-    if(e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
-        player.recalculatePosition(20, 0);
-        direction = "right";
-        iWalk++;
-        clearTimeout(timeoutIdUp),
-        clearTimeout(timeoutIdRight)
-        clearTimeout(timeoutIdDown)
-        clearTimeout(timeoutIdLeft)
-    }
-})
-
-document.body.addEventListener("keyup", (e)=>{
-    if(e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
-        timeoutIdUp = setTimeout(() => {direction = "standingUp"}, 400)
-    }
-    if(e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
-        timeoutIdRight = setTimeout(() => {direction = "standingRight"}, 400)
-    }
-    if(e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
-        timeoutIdDown = setTimeout(() => {direction = "standingDown"}, 400)
-    }
-    if(e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
-        timeoutIdLeft = setTimeout(() => {direction = "standingLeft"}, 400)
-    }
-})
 
 
 // // new changes //
@@ -562,3 +501,65 @@ class GhostBottom extends Ghost {
   
 
 
+  let timeoutIdUp
+  let timeoutIdRight
+  let timeoutIdDown
+  let timeoutIdLeft
+  let iWalk = 0
+  
+  
+  document.body.addEventListener("keydown", (e)=>{
+      if(e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+          player.recalculatePosition(0,-20);
+          direction = "up";
+          iWalk++;
+          clearTimeout(timeoutIdUp),
+          clearTimeout(timeoutIdRight)
+          clearTimeout(timeoutIdDown)
+          clearTimeout(timeoutIdLeft)
+          
+  
+      }
+      if(e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+          player.recalculatePosition(0,20);
+          direction = "down";
+          iWalk++;
+          clearTimeout(timeoutIdUp),
+          clearTimeout(timeoutIdRight)
+          clearTimeout(timeoutIdDown)
+          clearTimeout(timeoutIdLeft)
+      }
+      if(e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
+          player.recalculatePosition(-20, 0);
+          direction = "left";
+          iWalk++;
+          clearTimeout(timeoutIdUp),
+          clearTimeout(timeoutIdRight)
+          clearTimeout(timeoutIdDown)
+          clearTimeout(timeoutIdLeft)
+      }
+      if(e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
+          player.recalculatePosition(20, 0);
+          direction = "right";
+          iWalk++;
+          clearTimeout(timeoutIdUp),
+          clearTimeout(timeoutIdRight)
+          clearTimeout(timeoutIdDown)
+          clearTimeout(timeoutIdLeft)
+      }
+  })
+  
+  document.body.addEventListener("keyup", (e)=>{
+      if(e.key == "ArrowUp" || e.key == "w" || e.key == "W") {
+          timeoutIdUp = setTimeout(() => {direction = "standingUp"}, 400)
+      }
+      if(e.key == "ArrowRight" || e.key == "d" || e.key == "D") {
+          timeoutIdRight = setTimeout(() => {direction = "standingRight"}, 400)
+      }
+      if(e.key == "ArrowDown" || e.key == "s" || e.key == "S") {
+          timeoutIdDown = setTimeout(() => {direction = "standingDown"}, 400)
+      }
+      if(e.key == "ArrowLeft" || e.key == "a" || e.key == "A") {
+          timeoutIdLeft = setTimeout(() => {direction = "standingLeft"}, 400)
+      }
+  })
