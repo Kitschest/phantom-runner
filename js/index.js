@@ -9,7 +9,7 @@ let playerSprite = document.createElement("img");
 playerSprite.src = "./images/BILLY_BIT.png";
 
 let background = document.createElement("img");
-background.src = "images/PhantomRunner2.0.png" //"./images/main-background.png"
+background.src = "./images/canvas-background.png" //"./images/main-background.png"
 
 let intro = document.createElement("img");
 intro.src = "./images/intro.png"
@@ -340,7 +340,7 @@ const update = function() {
 
     
 
-    //ctxB.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
+    ctxB.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
     player.checkGhostCollision(); // Add this line to check for collisions
     checkExitCollision()
