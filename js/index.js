@@ -12,7 +12,7 @@ let background = document.createElement("img");
 background.src = "./images/canvas-background.png" //"./images/main-background.png"
 
 let intro = document.createElement("img");
-intro.src = "images/intro.png"
+intro.src = "./images/intro.png"
 
 background.onload = () => {
     ctxB.drawImage(intro,0,0,800,600)
