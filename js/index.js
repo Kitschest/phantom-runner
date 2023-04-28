@@ -29,7 +29,7 @@ let gameOverImg = document.createElement("img");
 gameOverImg.src = "images/gameover.png";
 
 let gameWinImg = document.createElement("img");
-gameWinImg.src = "images/wingame.png";
+gameWinImg.src = "images/youdidit.png";
 
 
 let exitDoorUp = document.createElement("img");
@@ -362,7 +362,7 @@ function gameOver() {
 
 
 function gameWin() {
-    ctxB.drawImage(gameWinImg, 50, 80, 700, 445)
+    ctxB.drawImage(gameWinImg, 100, 0, 600, 600)
     clearInterval(intervalId);
 }
 
