@@ -26,7 +26,7 @@ let ghostSprite = document.createElement("img");
 ghostSprite.src = "./images/ghost1.png";
 
 let gameOverImg = document.createElement("img");
-gameOverImg.src = "images/gameover.png";
+gameOverImg.src = "./images/gameover.png";
 
 let exitDoorUp = document.createElement("img");
 exitDoorUp.src = "./images/EXIT.png";
