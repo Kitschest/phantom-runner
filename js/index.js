@@ -9,10 +9,11 @@ let playerSprite = document.createElement("img");
 playerSprite.src = "./images/BILLY_BIT.png";
 
 let background = document.createElement("img");
-background.src = "./images/canvas-background.png" //"./images/main-background.png"
+background.src = "images/PhantomRunner2.0.png" //"./images/main-background.png"
 
 let intro = document.createElement("img");
 intro.src = "./images/intro.png"
+
 
 background.onload = () => {
     ctxB.drawImage(intro,0,0,800,600)
@@ -44,12 +45,29 @@ exitDoorRight.src ="./images/Puerta-Derecha.png"
 /* ctxF.fillStyle = "black";
 ctxF.fillRect(0,0,800,600);
 
-ctxF.save(); */
+let exitDoorDown = document.createElement("img");
+exitDoorDown.src ="./images/Puerta-Abajo.png"
+
+let exitDoorLeft = document.createElement("img");
+exitDoorLeft.src ="./images/Puerta-Izq.png"
+
+let exitDoorRight = document.createElement("img");
+exitDoorRight.src ="./images/Puerta-Derecha.png"
+
+
+
+
+
+// ctxF.fillStyle = "black";
+// ctxF.fillRect(0,0,800,600);
+
+// ctxF.save(); */
 
 
 // HEARTS DISPLAY
 let hearts = document.createElement("img");
 hearts.src = ""
+
 
 
 
@@ -176,12 +194,29 @@ const player = {
 
   //COLLISION WITH OBSTACLES
 
-//-------------------
-
 const obstacles = [
     // obstacle data here:
     
-
+//     {x: 0,   y: 0,   w: 800, h: 32},  //1 (todo el lado superior)
+//     {x: 220, y: 0,   w: 40,  h: 88}, //2
+//     {x: 220, y: 120, w: 40,  h: 149}, //4
+//     {x: 260, y: 160, w: 160, h: 48},  //5
+//     {x: 440, y: 160, w: 160, h: 48},  //6
+//     {x: 560, y: 208, w: 40,  h: 64},  //7
+//     {x: 600, y: 180, w: 100, h: 44},  //8
+//     {x: 720, y: 180, w: 80,  h: 44},  //9
+//     {x: 0,   y: 380, w: 80,  h: 52},  //10
+//     {x: 100, y: 380, w: 160, h: 52},  //11
+//     {x: 220, y: 300, w: 40,  h: 80},  //12
+//     {x: 240, y: 400, w: 80,  h: 48},  //13
+//     {x: 340, y: 400, w: 160, h: 48},  //14
+//     {x: 520, y: 400, w: 80,  h: 48},  //15
+//     {x: 560, y: 300, w: 40,  h: 100}, //16
+//     {x: 580, y: 420, w: 180, h: 44},  //17
+//     {x: 780, y: 420, w: 20,  h: 44},  //18
+//     {x: 400, y: 448, w: 40,  h: 48},  //19
+//     {x: 400, y: 540, w: 40,  h: 60},  //20 
+// ];
 
     {x: 0,   y: 0,   w: 800, h: 32},  //1 (todo el lado superior)
     {x: 220, y: 0,   w: 40,  h: 88}, //2
@@ -204,12 +239,34 @@ const obstacles = [
     {x: 400, y: 540, w: 40,  h: 60},  //20 
 ];
 
+//     {x: 0,   y: 0,   w: 220, h: 40},  //1
+//     {x: 220, y: 0,   w: 40,  h: 88},  //2
+//     {x: 260, y: 0,   w: 540, h: 40},  //3
+//     {x: 220, y: 120, w: 40,  h: 149}, //4
+//     {x: 260, y: 160, w: 160, h: 60},  //5
+//     {x: 440, y: 160, w: 160, h: 60},  //6
+//     {x: 560, y: 220, w: 40,  h: 50},  //7 **
+//     {x: 600, y: 180, w: 100, h: 60},  //8
+//     {x: 720, y: 180, w: 80,  h: 60},  //9
+//     {x: 0,   y: 380, w: 80,  h: 60},  //10
+//     {x: 100, y: 380, w: 160, h: 60},  //11
+//     {x: 220, y: 300, w: 40,  h: 80},  //12
+//     {x: 240, y: 400, w: 80,  h: 60},  //13
+//     {x: 340, y: 400, w: 160, h: 60},  //14
+//     {x: 520, y: 400, w: 80,  h: 60},  //15
+//     {x: 560, y: 300, w: 40,  h: 100}, //16
+//     {x: 580, y: 420, w: 180, h: 60},  //17
+//     {x: 780, y: 420, w: 20,  h: 60},  //18
+//     {x: 400, y: 460, w: 40,  h: 48},  //19
+//     {x: 400, y: 540, w: 40,  h: 60},  //20 
+//   ];
+
 
 
 function isColliding(rect1, rect2) {
     return rect1.x < rect2.x + rect2.w &&
-           rect1.x + rect1.w > rect2.x &&
-           rect1.y < rect2.y + rect2.h &&
+    rect1.x + rect1.w > rect2.x &&
+    rect1.y < rect2.y + rect2.h &&
            rect1.y + rect1.h > rect2.y;
 }
 
@@ -223,10 +280,10 @@ function canMoveTo(newX, newY, playerWidth, playerHeight) {
   
     for (const obstacle of obstacles) {
       if (isColliding(playerRect, obstacle)) {
-        return false;
-      }
+          return false;
+        }
     }
-  
+    
     return true;
 }
 
@@ -270,11 +327,14 @@ const update = function() {
     //REDRAW
     ctxB.drawImage(background, 0, 0, 800, 600);
 
+    door.print()
+    
     player.print();
-      
     ghosts.forEach((ghost) => {
         ghost.print()
     })
+
+    
 
     ctxB.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
@@ -468,7 +528,8 @@ const limites = [
     const randomX = getRandom((limit.x), (limit.x + limit.w));
     const randomY = getRandom((limit.y), (limit.y + limit.h));
     
-  
+    // console.log(`Rectangle ${i}: limite X:(${limit.x} entre ${limit.x + limit.w}) con Random point: X:${randomX}`)
+    // console.log(`Rectangle ${i}: limite Y:(${limit.y} entre ${limit.y + limit.h}) con Random point: Y:${randomY}`)
 
     randomPos.push({randomX, randomY}); 
     
@@ -506,6 +567,19 @@ const salida = [
   
 // console.log(salida[2][1]);
 
+
+
+// const exit = []; 
+// function salidaRand(salida) {
+//   for (let i = 0; i < salida.length; i++) {
+//     exit.push(salida[i])
+//     for (let j = 1; j < salida[i].length; j++) {
+//       exit.push(salida[i][j]);
+//       return salidaRand; 
+//     }
+//   }
+// }
+// console.log(exit); 
 
 const exit = []; 
 function salidaRand(salida) {
@@ -564,4 +638,3 @@ function checkExitCollision() {
         player.gradY = -290;
     }
 }
-
