@@ -345,6 +345,15 @@ const update = function() {
     player.checkGhostCollision(); // Add this line to check for collisions
     checkExitCollision()
 
+
+    if (cheatString == "billy") {
+        gradient.src = ""
+    }
+
+    if (gradientBack == "1234") {
+        gradient.src = "images/LAYER2.png"
+    }
+
 }
 
 let intervalId = null
@@ -517,6 +526,40 @@ document.querySelector('#heart-icon>img').classList.add("heart-life")
           timeoutIdLeft = setTimeout(() => {direction = "standingLeft"}, 400)
       }
   })
+
+let cheatString = ""
+document.body.addEventListener("keydown", (e)=>{
+    if(e.key == "b" || e.key == "B"){
+        cheatString += "b"
+    } else if(e.key == "i" || e.key == "I"){
+        cheatString += "i"
+    } else if(e.key == "l" || e.key == "L"){
+        cheatString += "l"
+    } else if(e.key == "y" || e.key == "Y"){
+        cheatString += "y"
+        // console.log("cheatString", cheatString)
+    } else {
+        cheatString = ""
+    }
+})
+
+let gradientBack = ""
+document.body.addEventListener("keydown", (e)=>{
+    if(e.key == "1") {
+        gradientBack += "1"
+    } else if(e.key == "2"){
+        gradientBack += "2"
+    } else if(e.key == "3"){
+        gradientBack += "3"
+    } else if(e.key == "4"){
+        gradientBack += "4"
+    } else {
+        gradientBack = ""
+    }
+})
+
+
+
 
   document.getElementById("play-button").addEventListener("click",start)
 
