@@ -12,7 +12,7 @@ let background = document.createElement("img");
 background.src = "./images/canvas-background.png" //"./images/main-background.png"
 
 let intro = document.createElement("img");
-intro.src = "images/intro.png"
+intro.src = "./images/intro.png"
 
 background.onload = () => {
     ctxB.drawImage(intro,0,0,800,600)
@@ -23,6 +23,18 @@ gradient.src = "images/LAYER2.png"
 
 let ghostSprite = document.createElement("img");
 ghostSprite.src = "./images/ghost1.png";
+
+let exitDoorUp = document.createElement("img");
+exitDoorUp.src = "./images/EXIT.png";
+
+let exitDoorDown = document.createElement("img");
+exitDoorDown.src ="./images/Puerta-Abajo.png"
+
+let exitDoorLeft = document.createElement("img");
+exitDoorLeft.src ="./images/Puerta-Izq.png"
+
+let exitDoorRight = document.createElement("img");
+exitDoorRight.src ="./images/Puerta-Derecha.png"
 
 let gameOverImg = document.createElement("img");
 gameOverImg.src = "images/gameover.png";
@@ -255,11 +267,15 @@ const update = function() {
     //REDRAW
     ctxB.drawImage(background, 0, 0, 800, 600);
 
+    door.print()
+    
     player.print();
       
     ghosts.forEach((ghost) => {
         ghost.print()
     })
+
+    
 
     // ctxF.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
@@ -273,7 +289,7 @@ const update = function() {
     ctxF.clearRect(0,0,800,600); */
    
     //ESTA ES LA LÍNEA DEL GRADIENTE
-    // ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
+    ctxB.drawImage(gradient,player.gradX,player.gradY,1600,1200) //*******
 
     // (Esta es la línea del gradiente de cuando usábamos dos canvas y la capa superior era black)
     // ctxF.drawImage(gradient,player.gradX,player.gradY,110,110)
@@ -429,3 +445,149 @@ document.querySelector('#heart-icon>img').classList.add("heart-life")
   })
 
   document.getElementById("play-button").addEventListener("click",start)
+
+
+  //NEM CHANGES SALIDA ---------------------------------------------------
+
+                                                
+// Define the rectangles with their respective coordinates
+const limites = [
+    { x: -20,     y: 48,      w: 4,            h: 320 },  // 0 -20 x izq
+    { x: -20,     y: 448,     w: 4,            h: 88 },  // 0-20 x izq
+    { x: 16,    y: 572,     w: 368,          h: 8 },   // 592 -20 y  abajo
+    { x: 448,   y: 572,     w: 336,          h: 8 },    // 592 -20 y      abajo                                  
+    { x: 771,   y: 64,      w: 4,            h: 96 },     // 776 - 10 x  derch
+    { x: 771,   y: 256,     w: 4,            h: 144 },  // 776-10 x derech
+    { x: 771,   y: 496,     w: 4,            h: 80 },  // 776-10 x derech
+    { x: 16,    y: 0,       w: 172,     h: 32 },     // 0 -10 y arriba  192 -20w
+    { x: 232,   y: 0,       w: 492,     h: 32 }, // 0 -10 w y arriba     512 -20w
+  ];
+  
+  // Function to generate a random number within a range
+  function getRandom(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+
+    }
+    
+    
+    
+
+  // Loop through each rectangle and generate a random x and y within its bounds
+  
+  let randomPos = [];
+
+  for (let i = 0; i < limites.length; i++) {
+    const limit = limites[i];
+    const randomX = getRandom((limit.x), (limit.x + limit.w));
+    const randomY = getRandom((limit.y), (limit.y + limit.h));
+    
+    // console.log(`Rectangle ${i}: limite X:(${limit.x} entre ${limit.x + limit.w}) con Random point: X:${randomX}`)
+    // console.log(`Rectangle ${i}: limite Y:(${limit.y} entre ${limit.y + limit.h}) con Random point: Y:${randomY}`)
+
+    randomPos.push({randomX, randomY}); 
+    
+}
+//console.log(randomPos)
+
+// const salida = {
+
+//     izquierda : [
+//                 { x: -20,     y:randomPos[0].randomY,     w: 40,       h: 40 },    
+//                 { x: -20,     y:randomPos[1].randomY,     w: 40,       h: 40 },
+//                 ],
+//     abajo :     [
+//                 { x: randomPos[2].randomX,    y: 572,   w: 40,       h: 40 },      
+//                 { x: randomPos[3].randomX,    y: 572,   w: 40,       h: 40 },   
+//                 ],
+//     derecha :   [ 
+//                 { x: 771,                     y: randomPos[4].randomY,    w: 40,       h: 40 },       
+//                 { x: 771,                     y: randomPos[5].randomY,    w: 40,       h: 40 },  
+//                 { x: 771,                     y: randomPos[6].randomY,    w: 40,       h: 40 },
+//                 ],
+//     arriba:     [            
+//                 { x: randomPos[7].randomX,    y: -10,                       w: 40,       h: 40 },     
+//                 { x: randomPos[8].randomX,    y: -10,                       w: 40,       h: 40 },
+//                 ],
+// }
+
+const salida = [
+    ["izquierda", {x: -20, y:randomPos[0].randomY, w: 40, h: 40}, {x: -20, y: randomPos[1].randomY, w: 40, h: 40 }],
+    ["abajo", { x: randomPos[2].randomX, y: 572, w: 40, h:40 }, {x: randomPos[3].randomX, y: 572, w: 40, h: 40 }],
+    ["derecha", {x: 771, y: randomPos[4].randomY, w: 40, h: 40 }, {x: 771, y: randomPos[5].randomY, w: 40, h: 40 },  
+    { x: 771, y: randomPos[6].randomY, w: 40, h: 40 }],
+    ["arriba", { x: randomPos[7].randomX, y: 0, w: 40, h: 40 },{ x: randomPos[8].randomX, y: 0, w: 40, h: 40 }]
+  ];
+  
+// console.log(salida[2][1]);
+
+
+
+// const exit = []; 
+// function salidaRand(salida) {
+//   for (let i = 0; i < salida.length; i++) {
+//     exit.push(salida[i])
+//     for (let j = 1; j < salida[i].length; j++) {
+//       exit.push(salida[i][j]);
+//       return salidaRand; 
+//     }
+//   }
+// }
+// console.log(exit); 
+
+const exit = []; 
+function salidaRand(salida) {
+  for (let i = 0; i < salida.length; i++) {
+    const exitIndex = getRandom(1, salida[i].length - 1);
+    exit.push(salida[i][exitIndex]);
+  }
+  return exit;
+}
+
+const fourExits = salidaRand(salida)
+console.log(fourExits); 
+
+const exitRandom = fourExits[Math.floor(Math.random()*4)]; 
+ 
+console.log(exitRandom); 
+
+
+const door = {
+
+    x: exitRandom.x,
+    y: exitRandom.y,
+   
+
+    print: function() {
+
+        if(exitRandom === fourExits[0]){ //izquierda
+        ctxB.drawImage(exitDoorLeft, this.x, this.y, 40, 40);
+        }
+        if(exitRandom === fourExits[1]) {  //abajo
+            ctxB.drawImage(exitDoorDown, this.x, this.y, 40, 40);
+        }
+        if(exitRandom === fourExits[2]){ // derecha
+            ctxB.drawImage(exitDoorRight, this.x, this.y, 40, 40);
+        }
+        if(exitRandom === fourExits[3]){ //arriba
+            ctxB.drawImage(exitDoorUp, this.x, this.y, 40, 42);
+        }
+    }
+}
+
+console.log("he aqui la puerta", door);
+
+
+
+  
+
+
+function checkExitCollision() {
+    if (isColliding(player, exitRandom)) {
+        player.x = 400;
+        player.y = 300;
+        player.arcX = 410;
+        player.arcY = 310;
+        player.gradX = -393;
+        player.gradY = -290;
+    }
+}
