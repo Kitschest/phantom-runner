@@ -9,7 +9,7 @@ let playerSprite = document.createElement("img");
 playerSprite.src = "./images/BILLY_BIT.png";
 
 let background = document.createElement("img");
-background.src = "images/PhantomRunner2.0.png" //"./images/main-background.png"
+background.src = "./images/canvas-background.png" //"./images/main-background.png"
 
 let intro = document.createElement("img");
 intro.src = "./images/intro.png"
@@ -27,6 +27,10 @@ ghostSprite.src = "./images/ghost1.png";
 
 let gameOverImg = document.createElement("img");
 gameOverImg.src = "./images/gameover.png";
+
+let gameWinImg = document.createElement("img");
+gameWinImg.src = "images/wingame.png";
+
 
 let exitDoorUp = document.createElement("img");
 exitDoorUp.src = "./images/EXIT.png";
@@ -339,7 +343,7 @@ const update = function() {
     ctxB.drawImage(gradient, player.gradX, player.gradY, 1600, 1200)
 
     player.checkGhostCollision(); // Add this line to check for collisions
-
+    checkExitCollision()
 
 }
 
@@ -356,6 +360,11 @@ function gameOver() {
     
 }
 
+
+function gameWin() {
+    ctxB.drawImage(gameWinImg, 50, 80, 700, 445)
+    clearInterval(intervalId);
+}
 
 
 
@@ -422,8 +431,20 @@ class GhostBottom extends Ghost {
     } 
 };
 
-let ghostTop = new GhostTop;
-ghosts.push(ghostTop)
+let ghostTop1 = new GhostTop;
+let ghostTop2 = new GhostTop;
+let ghostTop3 = new GhostTop;
+let ghostRight1 = new GhostRight;
+let ghostRight2 = new GhostRight;
+let ghostRight3 = new GhostRight;
+let ghostBottom1 = new GhostBottom;
+let ghostBottom2 = new GhostBottom;
+let ghostBottom3 = new GhostBottom;
+let ghostLeft1 = new GhostLeft;
+let ghostLeft2 = new GhostLeft;
+let ghostLeft3 = new GhostLeft;
+
+ghosts.push(ghostTop1, ghostTop2, ghostTop3, ghostRight1, ghostRight2, ghostRight3, ghostBottom1, ghostBottom2, ghostBottom3, ghostLeft1, ghostLeft2, ghostLeft3)
 
 
 
@@ -508,8 +529,8 @@ const limites = [
     { x: 771,   y: 64,      w: 4,            h: 96 },     // 776 - 10 x  derch
     { x: 771,   y: 256,     w: 4,            h: 144 },  // 776-10 x derech
     { x: 771,   y: 496,     w: 4,            h: 80 },  // 776-10 x derech
-    { x: 16,    y: 0,       w: 172,     h: 32 },     // 0 -10 y arriba  192 -20w
-    { x: 232,   y: 0,       w: 492,     h: 32 }, // 0 -10 w y arriba     512 -20w
+    { x: 16,    y: 15,       w: 172,     h: 32 },     // 0 -10 y arriba  192 -20w
+    { x: 232,   y: 15,       w: 492,     h: 32 }, // 0 -10 w y arriba     512 -20w
   ];
   
   // Function to generate a random number within a range
@@ -562,7 +583,7 @@ const salida = [
     ["abajo", { x: randomPos[2].randomX, y: 572, w: 40, h:40 }, {x: randomPos[3].randomX, y: 572, w: 40, h: 40 }],
     ["derecha", {x: 771, y: randomPos[4].randomY, w: 40, h: 40 }, {x: 771, y: randomPos[5].randomY, w: 40, h: 40 },  
     { x: 771, y: randomPos[6].randomY, w: 40, h: 40 }],
-    ["arriba", { x: randomPos[7].randomX, y: 0, w: 40, h: 40 },{ x: randomPos[8].randomX, y: 0, w: 40, h: 40 }]
+    ["arriba", { x: randomPos[7].randomX, y: 15, w: 40, h: 40 },{ x: randomPos[8].randomX, y: 15, w: 40, h: 40 }]
   ];
   
 // console.log(salida[2][1]);
@@ -630,11 +651,6 @@ console.log("he aqui la puerta", door);
 
 function checkExitCollision() {
     if (isColliding(player, exitRandom)) {
-        player.x = 400;
-        player.y = 300;
-        player.arcX = 410;
-        player.arcY = 310;
-        player.gradX = -393;
-        player.gradY = -290;
+        gameWin()
     }
 }
